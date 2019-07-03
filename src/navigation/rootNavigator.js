@@ -21,6 +21,9 @@ const AuthStack = createStackNavigator(
 		},
 		Registration: {
 			screen: RegistrationContainer,
+			navigationOptions: () => ({
+				title: 'Registraton',
+			}),
 		},
 	},
 	{

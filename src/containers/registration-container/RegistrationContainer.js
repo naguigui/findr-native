@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
-import { Text, TextInput, TouchableOpacity } from 'react-native'
 import { Mutation } from 'react-apollo'
 
 import Layout from '../../components/layout'
+import Registration from '../../components/registration'
 
 import { REGISTRATION_MUTATION } from '../../graphql/mutations/registrationMutation'
 
 const RegistrationContainer = (props) => {
-	const { registrationAction } = props
+	const { registrationAction, isLoading } = props
 
 	const [formValues, setFormValues] = useState({
 		name: '',
@@ -22,41 +22,25 @@ const RegistrationContainer = (props) => {
 		})
 	}
 
+	const onSubmit = () => {
+		registrationAction({
+			variables: {
+				name: formValues.name,
+				email: formValues.email,
+				password: formValues.password,
+			},
+		})
+	}
+
 	return (
-		<Layout>
-			<Text>Name</Text>
-			<TextInput
-				style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-				onChangeText={(text) => onChange('name', text)}
-				value={formValues.name}
+		<Layout isLoading={isLoading}>
+			<Registration
+				name={formValues.name}
+				email={formValues.email}
+				password={formValues.password}
+				onChange={onChange}
+				onSubmit={onSubmit}
 			/>
-			<Text>Email</Text>
-			<TextInput
-				style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-				onChangeText={(text) => onChange('email', text)}
-				value={formValues.email}
-			/>
-			<Text>Password</Text>
-			<TextInput
-				style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-				onChangeText={(text) => onChange('password', text)}
-				value={formValues.password}
-				secureTextEntry
-			/>
-			<TouchableOpacity
-				style={{ height: 100, borderWidth: 1, borderColor: 'black' }}
-				onPress={() =>
-					registrationAction({
-						variables: {
-							name: formValues.name,
-							email: formValues.email,
-							password: formValues.password,
-						},
-					})
-				}
-			>
-				<Text>Register</Text>
-			</TouchableOpacity>
 		</Layout>
 	)
 }
@@ -64,10 +48,11 @@ const RegistrationContainer = (props) => {
 const RegistrationContainerWithMutation = (props) => {
 	return (
 		<Mutation mutation={REGISTRATION_MUTATION}>
-			{(registrationAction, { data }) => (
+			{(registrationAction, { loading, data }) => (
 				<RegistrationContainer
 					data={data}
 					registrationAction={registrationAction}
+					isLoading={loading}
 					{...props}
 				/>
 			)}
