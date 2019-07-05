@@ -5,20 +5,27 @@ import Button from '../button'
 import * as S from './Registration.styled'
 
 const Registration = (props) => {
-	const { name, email, password, onChange, onSubmit } = props
+	const { name, email, password, onChange, onSubmit, navigateToLogin } = props
 
 	return (
 		<S.RegistrationWrapper>
+			<S.Title>Create an account</S.Title>
 			<S.FormWrapper>
 				<S.InputWrapper>
-					<Input label="name" name="name" value={name} onChange={onChange} />
-				</S.InputWrapper>
-				<S.InputWrapper>
-					<Input label="email" name="email" value={email} onChange={onChange} />
+					<Input label="Name" name="name" value={name} onChange={onChange} />
 				</S.InputWrapper>
 				<S.InputWrapper>
 					<Input
-						label="password"
+						label="Email"
+						name="email"
+						value={email}
+						onChange={onChange}
+						textContentType="emailAddress"
+					/>
+				</S.InputWrapper>
+				<S.InputWrapper>
+					<Input
+						label="Password"
 						name="password"
 						value={password}
 						isPassword={true}
@@ -26,7 +33,17 @@ const Registration = (props) => {
 					/>
 				</S.InputWrapper>
 			</S.FormWrapper>
-			<Button btnText="Register" onPress={onSubmit} />
+			<S.ButtonWrapper>
+				<Button
+					btnText="Register"
+					onPress={onSubmit}
+					rounded={true}
+					light={true}
+				/>
+			</S.ButtonWrapper>
+			<S.FooterText onPress={navigateToLogin}>
+				Already have an account? Log in
+			</S.FooterText>
 		</S.RegistrationWrapper>
 	)
 }

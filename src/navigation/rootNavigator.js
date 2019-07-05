@@ -1,5 +1,11 @@
 import React from 'react'
+import { createSwitchNavigator, createStackNavigator } from 'react-navigation'
+
 import RegistrationContainer from '../containers/registration-container'
+import LoginContainer from '../containers/login-container'
+import Welcome from '../components/welcome'
+
+import * as Colors from '../theme/colors'
 import { View, Text } from 'react-native'
 
 const DummyComponent = () => (
@@ -8,26 +14,36 @@ const DummyComponent = () => (
 	</View>
 )
 
-import {
-	createSwitchNavigator,
-	createStackNavigator,
-	createAppContainer,
-} from 'react-navigation'
+const defaultNavigationOptions = {
+	headerStyle: {
+		backgroundColor: Colors.MAIN_BLUE,
+	},
+	headerTintColor: Colors.WHITE,
+}
 
 const AuthStack = createStackNavigator(
 	{
+		Welcome: {
+			screen: Welcome,
+			navigationOptions: () => ({
+				...defaultNavigationOptions,
+			}),
+		},
 		Login: {
-			screen: DummyComponent,
+			screen: LoginContainer,
+			navigationOptions: () => ({
+				...defaultNavigationOptions,
+			}),
 		},
 		Registration: {
 			screen: RegistrationContainer,
 			navigationOptions: () => ({
-				title: 'Registraton',
+				...defaultNavigationOptions,
 			}),
 		},
 	},
 	{
-		initialRouteName: 'Registration',
+		initialRouteName: 'Welcome',
 	},
 )
 
@@ -37,14 +53,14 @@ const AppStack = createStackNavigator({
 	},
 })
 
-const AppNavigator = createSwitchNavigator(
-	{
-		Auth: AuthStack,
-		App: AppStack,
-	},
-	{
-		initialRouteName: 'Auth',
-	},
-)
-
-export default createAppContainer(AppNavigator)
+export const generateMainNavigator = (authenticated) => {
+	return createSwitchNavigator(
+		{
+			Auth: AuthStack,
+			App: AppStack,
+		},
+		{
+			initialRouteName: authenticated ? 'App' : 'Auth',
+		},
+	)
+}

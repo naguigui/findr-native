@@ -1,6 +1,6 @@
 import styled from 'styled-components/native'
 
-export const RegistrationWrapper = styled.View`
+export const LoginWrapper = styled.View`
 	display: flex;
 	flex-direction: column;
 	flex: 1;

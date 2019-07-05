@@ -2,16 +2,16 @@ import React, { useState } from 'react'
 import { Mutation } from 'react-apollo'
 
 import Layout from '../../components/layout'
-import Registration from '../../components/registration'
+import Login from '../../components/login'
 
-import { REGISTRATION_MUTATION } from '../../graphql/mutations/authMutations'
+import { LOGIN_MUTATION } from '../../graphql/mutations/authMutations'
 import navigationService from '../../services/navigationService'
+import AuthService from '../../services/authService'
 
-const RegistrationContainer = (props) => {
-	const { registrationAction, isLoading } = props
+const LoginContainer = (props) => {
+	const { loginAction, isLoading } = props
 
 	const [formValues, setFormValues] = useState({
-		name: '',
 		email: '',
 		password: '',
 	})
@@ -24,49 +24,46 @@ const RegistrationContainer = (props) => {
 	}
 
 	const onSubmit = () => {
-		registrationAction({
+		loginAction({
 			variables: {
-				name: formValues.name,
 				email: formValues.email,
 				password: formValues.password,
 			},
 		})
 	}
 
-	const navigateToLogin = () => {
+	const navigateToRegistration = () => {
 		navigationService.navigate({
-			routeName: 'Login',
+			routeName: 'Registration',
 		})
 	}
 
 	return (
 		<Layout isLoading={isLoading}>
-			<Registration
-				name={formValues.name}
+			<Login
 				email={formValues.email}
 				password={formValues.password}
 				onChange={onChange}
 				onSubmit={onSubmit}
-				navigateToLogin={navigateToLogin}
+				navigateToRegistration={navigateToRegistration}
 			/>
 		</Layout>
 	)
 }
 
-const RegistrationContainerWithMutation = (props) => {
+const LoginContainerWithMutation = (props) => {
 	return (
 		<Mutation
-			mutation={REGISTRATION_MUTATION}
-			onCompleted={() => {
-				navigationService.navigate({
-					routeName: 'Login',
-				})
+			mutation={LOGIN_MUTATION}
+			onCompleted={async (data) => {
+				const { accessToken } = data.login
+				await AuthService.authenticate(accessToken)
 			}}
 		>
-			{(registrationAction, { loading, data }) => (
-				<RegistrationContainer
-					data={data}
-					registrationAction={registrationAction}
+			{(loginAction, { loading, data }) => (
+				<LoginContainer
+					mutationData={data}
+					loginAction={loginAction}
 					isLoading={loading}
 					{...props}
 				/>
@@ -75,4 +72,4 @@ const RegistrationContainerWithMutation = (props) => {
 	)
 }
 
-export default RegistrationContainerWithMutation
+export default LoginContainerWithMutation
