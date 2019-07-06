@@ -1,4 +1,5 @@
 import * as SecureStore from 'expo-secure-store'
+import client from '../graphql/client'
 
 const ACCESS_TOKEN_NAME = 'titan_access_token'
 
@@ -14,6 +15,7 @@ class AuthService {
 	authenticate = async (accessToken) => {
 		await SecureStore.setItemAsync(ACCESS_TOKEN_NAME, accessToken)
 		this[ACCESS_TOKEN_NAME] = accessToken
+		client.resetStore()
 	}
 
 	deauthenticate = async () => {

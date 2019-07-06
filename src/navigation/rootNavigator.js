@@ -17,7 +17,6 @@ import CustomHeader from '../components/custom-header'
 
 import * as Colors from '../theme/colors'
 import { View, Text } from 'react-native'
-import navigationService from '../services/navigationService'
 
 const DummyComponent = () => (
 	<View>
