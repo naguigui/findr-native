@@ -26,7 +26,10 @@ class AuthService {
 	}
 	isAuthenticated = () => {
 		const token = this.getAccessToken()
-		return !!token
+		if (token) {
+			return true
+		}
+		return false
 	}
 }
 

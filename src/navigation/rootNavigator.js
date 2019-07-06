@@ -6,15 +6,18 @@ import {
 } from 'react-navigation'
 import { Ionicons } from '@expo/vector-icons'
 
-import RegistrationContainer from '../containers/registration-container'
-import LoginContainer from '../containers/login-container'
-import AccountSettingsContainer from '../containers/account-settings-container'
+import {
+	RegistrationContainer,
+	LoginContainer,
+	AccountViewContainer,
+} from '../containers'
 
 import Welcome from '../components/welcome'
 import CustomHeader from '../components/custom-header'
 
 import * as Colors from '../theme/colors'
 import { View, Text } from 'react-native'
+import navigationService from '../services/navigationService'
 
 const DummyComponent = () => (
 	<View>
@@ -57,15 +60,10 @@ const AuthStack = createStackNavigator(
 
 const AccountSettingsStack = createStackNavigator({
 	Account: {
-		screen: AccountSettingsContainer,
-		navigationOptions: ({ navigation }) => {
+		screen: AccountViewContainer,
+		navigationOptions: () => {
 			return {
-				header: (
-					<CustomHeader
-						title={navigation.getParam('title')}
-						subtitle="View Account"
-					/>
-				),
+				header: <CustomHeader title="Account" />,
 			}
 		},
 	},

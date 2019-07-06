@@ -8,8 +8,6 @@ import { LOGIN_MUTATION } from '../../graphql/mutations/authMutations'
 import navigationService from '../../services/navigationService'
 import AuthService from '../../services/authService'
 
-import { usePrevious } from '../../hooks'
-
 const LoginContainer = (props) => {
 	const { loginAction, isLoading } = props
 
@@ -17,16 +15,6 @@ const LoginContainer = (props) => {
 		email: '',
 		password: '',
 	})
-
-	const prevLoading = usePrevious(isLoading)
-
-	useEffect(() => {
-		if (prevLoading && !isLoading) {
-			navigationService.navigate({
-				routeName: 'App',
-			})
-		}
-	}, [isLoading])
 
 	const onChange = (name, value) => {
 		setFormValues({
@@ -70,11 +58,13 @@ const LoginContainerWithMutation = (props) => {
 			onCompleted={async (data) => {
 				const { accessToken } = data.login
 				await AuthService.authenticate(accessToken)
+				navigationService.navigate({
+					routeName: 'App',
+				})
 			}}
 		>
-			{(loginAction, { loading, data, error }) => (
+			{(loginAction, { loading, error }) => (
 				<LoginContainer
-					mutationData={data}
 					loginAction={loginAction}
 					isLoading={loading}
 					error={error}
