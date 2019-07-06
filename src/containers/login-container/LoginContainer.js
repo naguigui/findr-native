@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Mutation } from 'react-apollo'
 
 import Layout from '../../components/layout'
@@ -58,13 +58,16 @@ const LoginContainerWithMutation = (props) => {
 			onCompleted={async (data) => {
 				const { accessToken } = data.login
 				await AuthService.authenticate(accessToken)
+				navigationService.navigate({
+					routeName: 'App',
+				})
 			}}
 		>
-			{(loginAction, { loading, data }) => (
+			{(loginAction, { loading, error }) => (
 				<LoginContainer
-					mutationData={data}
 					loginAction={loginAction}
 					isLoading={loading}
+					error={error}
 					{...props}
 				/>
 			)}

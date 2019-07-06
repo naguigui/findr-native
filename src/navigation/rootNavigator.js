@@ -1,9 +1,19 @@
 import React from 'react'
-import { createSwitchNavigator, createStackNavigator } from 'react-navigation'
+import {
+	createBottomTabNavigator,
+	createSwitchNavigator,
+	createStackNavigator,
+} from 'react-navigation'
+import { Ionicons } from '@expo/vector-icons'
 
-import RegistrationContainer from '../containers/registration-container'
-import LoginContainer from '../containers/login-container'
+import {
+	RegistrationContainer,
+	LoginContainer,
+	AccountViewContainer,
+} from '../containers'
+
 import Welcome from '../components/welcome'
+import CustomHeader from '../components/custom-header'
 
 import * as Colors from '../theme/colors'
 import { View, Text } from 'react-native'
@@ -47,17 +57,53 @@ const AuthStack = createStackNavigator(
 	},
 )
 
-const AppStack = createStackNavigator({
-	Home: {
-		screen: DummyComponent,
+const AccountSettingsStack = createStackNavigator({
+	Account: {
+		screen: AccountViewContainer,
+		navigationOptions: () => {
+			return {
+				header: <CustomHeader title="Account" />,
+			}
+		},
 	},
 })
+
+const TabNavigator = createBottomTabNavigator(
+	{
+		Home: DummyComponent,
+		AccountSettings: AccountSettingsStack,
+	},
+	{
+		defaultNavigationOptions: ({ navigation }) => ({
+			tabBarIcon: ({ focused }) => {
+				const { routeName } = navigation.state
+				let IconComponent = Ionicons
+				let iconName
+				if (routeName === 'Home') {
+					iconName = 'md-home'
+				} else if (routeName === 'AccountSettings') {
+					iconName = 'md-person'
+				}
+				return (
+					<IconComponent
+						name={iconName}
+						size={32}
+						color={focused ? Colors.black : 'grey'}
+					/>
+				)
+			},
+		}),
+		tabBarOptions: {
+			showLabel: false,
+		},
+	},
+)
 
 export const generateMainNavigator = (authenticated) => {
 	return createSwitchNavigator(
 		{
 			Auth: AuthStack,
-			App: AppStack,
+			App: TabNavigator,
 		},
 		{
 			initialRouteName: authenticated ? 'App' : 'Auth',

@@ -9,7 +9,7 @@ import * as S from './Welcome.styled'
 
 const Welcome = () => {
 	return (
-		<Layout main>
+		<Layout>
 			<S.WelcomeWrapper>
 				<S.Content>
 					<S.Title>Welcome to Titan.</S.Title>
