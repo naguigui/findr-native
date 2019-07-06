@@ -1,19 +1,13 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect } from 'react'
 import { Query } from 'react-apollo'
 import { Text, View } from 'react-native'
 import { isEmpty } from 'lodash'
 
 import Layout from '../../components/layout'
+import AuthService from '../../services/authService'
 
 import { GET_USER } from '../../graphql/queries/userQueries'
-
-const usePrevious = (value) => {
-	const ref = useRef()
-	useEffect(() => {
-		ref.current = value
-	})
-	return ref.current
-}
+import { usePrevious } from '../../hooks'
 
 const AccountSettingsContainer = (props) => {
 	const { navigation, queryData } = props
@@ -29,6 +23,9 @@ const AccountSettingsContainer = (props) => {
 		<Layout>
 			<View>
 				<Text>Account Settings</Text>
+				<Text onPress={async () => await AuthService.deauthenticate()}>
+					Logout
+				</Text>
 			</View>
 		</Layout>
 	)
