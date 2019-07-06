@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { Query } from 'react-apollo'
 import { isEmpty } from 'lodash'
+
 import AccountHero from '../../components/account-hero'
 import ListItem from '../../components/list-item'
 import Layout from '../../components/layout'
 
 import AuthService from '../../services/authService'
 import navigationService from '../../services/navigationService'
+import { resetCache } from '../../graphql/client'
 
 import { GET_USER } from '../../graphql/queries/userQueries'
 import { usePrevious } from '../../hooks'
@@ -27,6 +29,7 @@ const AccountViewContainer = (props) => {
 
 	const logout = async () => {
 		await AuthService.deauthenticate()
+		resetCache()
 		navigationService.navigate({
 			routeName: 'Auth',
 		})

@@ -25,4 +25,8 @@ const client = new ApolloClient({
 	},
 })
 
+export const resetCache = () => {
+	client.resetStore()
+}
+
 export default client
