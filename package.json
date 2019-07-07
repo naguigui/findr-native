@@ -6,6 +6,7 @@
 		"ios": "expo start --ios",
 		"web": "expo start --web",
 		"format": "prettier --write \"**/*.{js,json,md,yaml,yml}\"",
+		"generate": "plop",
 		"eject": "expo eject"
 	},
 	"dependencies": {
@@ -26,7 +27,8 @@
 	},
 	"devDependencies": {
 		"babel-preset-expo": "^5.1.1",
-		"prettier": "^1.18.2"
+		"prettier": "^1.18.2",
+		"plop": "^2.0.0"
 	},
 	"private": true
 }
