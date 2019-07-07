@@ -42,7 +42,7 @@ const PartyContainer = (props) => {
 }
 
 const PartyContainerWithQuery = (props) => (
-	<Query query={GET_USER}>
+	<Query query={GET_USER} fetchPolicy="network-only">
 		{({ loading, data, refetch }) => (
 			<PartyContainer
 				queryData={data}
