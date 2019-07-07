@@ -5,6 +5,9 @@ import { gql } from 'apollo-boost'
 import { Home, Layout } from '../../components'
 
 import { usePrevious } from '../../hooks'
+import navigationService from '../../services/navigationService'
+
+import * as Routes from '../../utils/routeNames'
 
 import * as S from './HomeContainer.styled'
 
@@ -42,7 +45,14 @@ const HomeContainer = (props) => {
 			<>
 				{isLoading && <S.LoadingText>Loading...</S.LoadingText>}
 				{!isLoading && user && isEmpty(user.room) && (
-					<Home onCreateRoom={() => {}} onJoinRoom={() => {}} />
+					<Home
+						onCreateRoom={() =>
+							navigationService.navigate({
+								routeName: Routes.CREATE_ROOM_ROUTE,
+							})
+						}
+						onJoinRoom={() => {}}
+					/>
 				)}
 			</>
 		</Layout>

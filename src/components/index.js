@@ -1,6 +1,7 @@
 export { default as AccountHero } from './account-hero'
 export { default as Button } from './button'
 export { default as CustomHeader } from './custom-header'
+export { default as CreateRoom } from './create-room'
 export { default as Input } from './input'
 export { default as Layout } from './layout'
 export { default as ListItem } from './list-item'

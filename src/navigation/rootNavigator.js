@@ -7,6 +7,7 @@ import {
 import { Ionicons } from '@expo/vector-icons'
 
 import {
+	CreateRoomContainer,
 	RegistrationContainer,
 	LoginContainer,
 	AccountViewContainer,
@@ -18,13 +19,6 @@ import { Welcome, CustomHeader } from '../components'
 import * as Routes from '../utils/routeNames'
 
 import * as Colors from '../theme/colors'
-import { View, Text } from 'react-native'
-
-const DummyComponent = () => (
-	<View>
-		<Text>Dummy</Text>
-	</View>
-)
 
 const defaultNavigationOptions = {
 	headerStyle: {
@@ -37,43 +31,48 @@ const AuthStack = createStackNavigator(
 	{
 		[Routes.WELCOME_ROUTE]: {
 			screen: Welcome,
-			navigationOptions: () => ({
-				...defaultNavigationOptions,
-			}),
 		},
 		[Routes.LOGIN_ROUTE]: {
 			screen: LoginContainer,
-			navigationOptions: () => ({
-				...defaultNavigationOptions,
-			}),
 		},
 		[Routes.REGISTRATION_ROUTE]: {
 			screen: RegistrationContainer,
-			navigationOptions: () => ({
-				...defaultNavigationOptions,
-			}),
 		},
 	},
 	{
 		initialRouteName: Routes.WELCOME_ROUTE,
+		defaultNavigationOptions,
 	},
 )
 
-const HomeStack = createStackNavigator({
-	[Routes.HOME_ROUTE]: {
-		screen: HomeContainer,
-		navigationOptions: ({ navigation }) => {
-			return {
-				header: (
-					<CustomHeader
-						title="Welcome"
-						subtitle={navigation.getParam('subtitle')}
-					/>
-				),
-			}
+const HomeStack = createStackNavigator(
+	{
+		[Routes.HOME_ROUTE]: {
+			screen: HomeContainer,
+			navigationOptions: ({ navigation }) => {
+				return {
+					header: (
+						<CustomHeader
+							title="Welcome"
+							subtitle={navigation.getParam('subtitle')}
+						/>
+					),
+				}
+			},
+		},
+		[Routes.CREATE_ROOM_ROUTE]: {
+			screen: CreateRoomContainer,
+			navigationOptions: () => {
+				return {
+					title: 'Create Room',
+				}
+			},
 		},
 	},
-})
+	{
+		defaultNavigationOptions,
+	},
+)
 
 const AccountSettingsStack = createStackNavigator({
 	[Routes.ACCOUNT_SETTINGS_ROUTE]: {

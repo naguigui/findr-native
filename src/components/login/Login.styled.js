@@ -4,8 +4,8 @@ export const LoginWrapper = styled.View`
 	display: flex;
 	flex-direction: column;
 	flex: 1;
-	padding-left: 18;
-	padding-right: 18;
+	padding-left: 16;
+	padding-right: 16;
 	margin-top: 16%;
 `
 

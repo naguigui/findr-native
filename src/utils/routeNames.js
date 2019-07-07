@@ -1,3 +1,4 @@
+export const CREATE_ROOM_ROUTE = 'CreateRoom'
 export const LOGIN_ROUTE = 'Login'
 export const REGISTRATION_ROUTE = 'Registration'
 export const WELCOME_ROUTE = 'Welcome'

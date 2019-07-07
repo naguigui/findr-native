@@ -58,9 +58,8 @@ const RegistrationContainer = (props) => {
 const RegistrationContainerWithMutation = (props) => {
 	return (
 		<Mutation mutation={REGISTRATION_MUTATION} onCompleted={navigateToLogin}>
-			{(registrationAction, { loading, data }) => (
+			{(registrationAction, { loading }) => (
 				<RegistrationContainer
-					data={data}
 					registrationAction={registrationAction}
 					isLoading={loading}
 					{...props}
