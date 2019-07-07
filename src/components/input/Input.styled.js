@@ -1,4 +1,4 @@
-import { Item, Input as NativeBaseInput, Label } from 'native-base'
+import { Label } from 'native-base'
 import styled from 'styled-components/native'
 
 export const StyledLabel = styled(Label)`

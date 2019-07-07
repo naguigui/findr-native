@@ -12,13 +12,17 @@ export const HomeWrapper = styled.View`
 export const Title = styled.Text`
 	font-size: 32;
 	font-weight: bold;
-	color: ${(props) => props.theme.colors.main};
+	color: ${(props) => {
+		return props.theme.colors.main
+	}};
 	margin-bottom: 32;
 `
 
 export const LoadingText = styled.Text`
 	font-size: 18;
-	color: ${(props) => props.theme.colors.black};
+	color: ${(props) => {
+		return props.theme.colors.black
+	}};
 `
 
 export const ButtonWrapper = styled.View`

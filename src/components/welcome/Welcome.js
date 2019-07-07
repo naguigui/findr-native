@@ -24,11 +24,11 @@ const Welcome = () => {
 							rounded={true}
 							bordered={true}
 							light={true}
-							onPress={() =>
-								navigationService.navigate({
+							onPress={() => {
+								return navigationService.navigate({
 									routeName: Routes.REGISTRATION_ROUTE,
 								})
-							}
+							}}
 						/>
 					</S.ButtonWrapper>
 					<S.ButtonWrapper>
@@ -37,11 +37,11 @@ const Welcome = () => {
 							rounded={true}
 							bordered={true}
 							light={true}
-							onPress={() =>
-								navigationService.navigate({
+							onPress={() => {
+								return navigationService.navigate({
 									routeName: Routes.LOGIN_ROUTE,
 								})
-							}
+							}}
 						/>
 					</S.ButtonWrapper>
 				</S.Content>

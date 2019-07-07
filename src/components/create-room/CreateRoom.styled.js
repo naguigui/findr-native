@@ -12,7 +12,9 @@ export const CreateRoomWrapper = styled.View`
 export const Title = styled.Text`
 	font-size: 32;
 	font-weight: bold;
-	color: ${(props) => props.theme.colors.main};
+	color: ${(props) => {
+		return props.theme.colors.main
+	}};
 	margin-bottom: 32;
 `
 

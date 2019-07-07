@@ -28,7 +28,7 @@ const Login = (props) => {
 				<Button btnText="Login" onPress={onSubmit} isSecondary={true} />
 			</S.ButtonWrapper>
 			<S.FooterText onPress={navigateToRegistration}>
-				Don't have an account? Register for one
+				Don&apos;t have an account? Register for one
 			</S.FooterText>
 		</S.LoginWrapper>
 	)

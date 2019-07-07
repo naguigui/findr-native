@@ -46,11 +46,11 @@ const HomeContainer = (props) => {
 				{isLoading && <S.LoadingText>Loading...</S.LoadingText>}
 				{!isLoading && user && isEmpty(user.room) && (
 					<Home
-						onCreateRoom={() =>
-							navigationService.navigate({
+						onCreateRoom={() => {
+							return navigationService.navigate({
 								routeName: Routes.CREATE_ROOM_ROUTE,
 							})
-						}
+						}}
 						onJoinRoom={() => {}}
 					/>
 				)}

@@ -6,6 +6,7 @@
 		"ios": "expo start --ios",
 		"web": "expo start --web",
 		"format": "prettier --write \"**/*.{js,json,md,yaml,yml}\"",
+		"lint": "eslint src",
 		"generate": "plop",
 		"eject": "expo eject"
 	},
@@ -27,6 +28,19 @@
 	},
 	"devDependencies": {
 		"babel-preset-expo": "^5.1.1",
+		"babel-eslint": "^8.0.2",
+		"eslint": "^4.19.1",
+		"eslint-config-airbnb": "^15.1.0",
+		"eslint-config-prettier": "^2.9.0",
+		"eslint-config-standard": "^11.0.0",
+		"eslint-config-standard-react": "^5.0.0",
+		"eslint-plugin-babel": "^5.1.0",
+		"eslint-plugin-import": "^2.2.0",
+		"eslint-plugin-jsx-a11y": "^6.0.2",
+		"eslint-plugin-node": "^6.0.1",
+		"eslint-plugin-promise": "^3.4.0",
+		"eslint-plugin-react": "^7.3.0",
+		"eslint-plugin-standard": "^3.0.1",
 		"prettier": "^1.18.2",
 		"plop": "^2.0.0"
 	},

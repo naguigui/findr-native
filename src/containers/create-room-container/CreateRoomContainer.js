@@ -47,14 +47,16 @@ const CreateRoomContainer = (props) => {
 const CreateRoomContainerWithMutation = (props) => {
 	return (
 		<Mutation mutation={CREATE_ROOM_MUTATION}>
-			{(createRoomAction, { loading, data }) => (
-				<CreateRoomContainer
-					createRoomAction={createRoomAction}
-					isLoading={loading}
-					mutationData={data}
-					{...props}
-				/>
-			)}
+			{(createRoomAction, { loading, data }) => {
+				return (
+					<CreateRoomContainer
+						createRoomAction={createRoomAction}
+						isLoading={loading}
+						mutationData={data}
+						{...props}
+					/>
+				)
+			}}
 		</Mutation>
 	)
 }

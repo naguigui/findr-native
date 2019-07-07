@@ -1,6 +1,7 @@
 import React from 'react'
-import * as Colors from '../../theme/colors'
 import { Item, Input as NativeBaseInput, Label } from 'native-base'
+
+import * as Colors from '../../theme/colors'
 
 const Input = (props) => {
 	const {
@@ -28,7 +29,9 @@ const Input = (props) => {
 					fontWeight: 'bold',
 				}}
 				value={value}
-				onChangeText={(val) => onChange(name, val)}
+				onChangeText={(val) => {
+					return onChange(name, val)
+				}}
 				secureTextEntry={isPassword}
 				textContentType={textContentType}
 			/>

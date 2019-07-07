@@ -91,10 +91,9 @@ const TabNavigator = createBottomTabNavigator(
 		[Routes.ACCOUNT_SETTINGS_ROUTE]: AccountSettingsStack,
 	},
 	{
-		defaultNavigationOptions: ({ navigation }) => ({
-			tabBarIcon: ({ focused }) => {
+		defaultNavigationOptions: ({ navigation }) => {
+			const TabBarIcon = ({ focused }) => {
 				const { routeName } = navigation.state
-				let IconComponent = Ionicons
 				let iconName
 				if (routeName === Routes.HOME_ROUTE) {
 					iconName = 'md-home'
@@ -102,14 +101,17 @@ const TabNavigator = createBottomTabNavigator(
 					iconName = 'md-person'
 				}
 				return (
-					<IconComponent
+					<Ionicons
 						name={iconName}
 						size={32}
-						color={focused ? Colors.black : 'grey'}
+						color={focused ? Colors.BLACK : Colors.GREY}
 					/>
 				)
-			},
-		}),
+			}
+			return {
+				tabBarIcon: TabBarIcon,
+			}
+		},
 		tabBarOptions: {
 			showLabel: false,
 		},
