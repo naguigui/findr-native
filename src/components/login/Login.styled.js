@@ -12,9 +12,7 @@ export const LoginWrapper = styled.View`
 export const Title = styled.Text`
 	font-size: 32;
 	font-weight: bold;
-	color: ${(props) => {
-		return props.theme.colors.white
-	}};
+	color: ${(props) => props.theme.colors.white};
 	margin-bottom: 32;
 `
 
@@ -32,8 +30,6 @@ export const ButtonWrapper = styled.View`
 
 export const FooterText = styled.Text`
 	font-size: 16;
-	color: ${(props) => {
-		return props.theme.colors.white
-	}};
+	color: ${(props) => props.theme.colors.white};
 	text-align: center;
 `

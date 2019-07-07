@@ -29,9 +29,7 @@ const Input = (props) => {
 					fontWeight: 'bold',
 				}}
 				value={value}
-				onChangeText={(val) => {
-					return onChange(name, val)
-				}}
+				onChangeText={(val) => onChange(name, val)}
 				secureTextEntry={isPassword}
 				textContentType={textContentType}
 			/>

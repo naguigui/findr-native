@@ -55,20 +55,16 @@ const RegistrationContainer = (props) => {
 	)
 }
 
-const RegistrationContainerWithMutation = (props) => {
-	return (
+const RegistrationContainerWithMutation = (props) => (
 		<Mutation mutation={REGISTRATION_MUTATION} onCompleted={navigateToLogin}>
-			{(registrationAction, { loading }) => {
-				return (
+			{(registrationAction, { loading }) => (
 					<RegistrationContainer
 						registrationAction={registrationAction}
 						isLoading={loading}
 						{...props}
 					/>
-				)
-			}}
+				)}
 		</Mutation>
 	)
-}
 
 export default RegistrationContainerWithMutation

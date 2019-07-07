@@ -5,9 +5,7 @@ export const LayoutWrapper = styled(SafeAreaView)`
 	display: flex;
 	flex-direction: column;
 	flex: 1;
-	background-color: ${(props) => {
-		return props.isAuthenticated
+	background-color: ${(props) => props.isAuthenticated
 			? props.theme.colors.white
-			: props.theme.colors.main
-	}};
+			: props.theme.colors.main};
 `

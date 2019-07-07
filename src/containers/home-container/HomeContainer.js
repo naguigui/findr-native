@@ -60,11 +60,9 @@ const HomeContainer = (props) => {
 				{!isEmpty(user.room) && (
 					<Rooms
 						room={user.room}
-						onNavigateToParty={() => {
-							return navigationService.navigate({
+						onNavigateToParty={() => navigationService.navigate({
 								routeName: Routes.PARTY_ROUTE,
-							})
-						}}
+							})}
 					/>
 				)}
 			</>
@@ -72,8 +70,7 @@ const HomeContainer = (props) => {
 	)
 }
 
-const HomeContainerWithQuery = (props) => {
-	return (
+const HomeContainerWithQuery = (props) => (
 		<Query query={GET_USER_QUERY}>
 			{({ loading, data }) => {
 				if (loading) {
@@ -83,6 +80,5 @@ const HomeContainerWithQuery = (props) => {
 			}}
 		</Query>
 	)
-}
 
 export default HomeContainerWithQuery

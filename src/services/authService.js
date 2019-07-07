@@ -21,9 +21,7 @@ class AuthService {
 		this[ACCESS_TOKEN_NAME] = null
 	}
 
-	getAccessToken = () => {
-		return this[ACCESS_TOKEN_NAME]
-	}
+	getAccessToken = () => this[ACCESS_TOKEN_NAME]
 	isAuthenticated = () => {
 		const token = this.getAccessToken()
 		if (token) {

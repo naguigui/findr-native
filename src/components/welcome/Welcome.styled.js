@@ -3,9 +3,7 @@ import styled from 'styled-components/native'
 export const LoginLink = styled.Text`
 	font-size: 18;
 	font-weight: bold;
-	color: ${(props) => {
-		return props.theme.colors.white
-	}};
+	color: ${(props) => props.theme.colors.white};
 	align-self: flex-end;
 	margin-top: 12%;
 `
@@ -16,9 +14,7 @@ export const WelcomeWrapper = styled.View`
 	flex: 1;
 	padding-left: 16;
 	padding-right: 16;
-	background-color: ${(props) => {
-		return props.theme.colors.main
-	}};
+	background-color: ${(props) => props.theme.colors.main};
 `
 
 export const Content = styled.View`
@@ -31,9 +27,7 @@ export const Content = styled.View`
 export const Title = styled.Text`
 	font-size: 32;
 	font-weight: bold;
-	color: ${(props) => {
-		return props.theme.colors.white
-	}};
+	color: ${(props) => props.theme.colors.white};
 	margin-bottom: 32;
 `
 

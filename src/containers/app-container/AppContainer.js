@@ -30,9 +30,7 @@ const AppContainer = () => {
 	return (
 		<AppLoading
 			startAsync={initializeApp}
-			onFinish={() => {
-				return setIsReady(true)
-			}}
+			onFinish={() => setIsReady(true)}
 			onError={console.warn}
 		/>
 	)

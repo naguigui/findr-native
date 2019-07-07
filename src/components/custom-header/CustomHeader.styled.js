@@ -7,13 +7,9 @@ export const CustomHeaderWrapper = styled(SafeAreaView)`
 	flex: 1;
 	min-height: 100;
 	width: 100%;
-	background-color: ${(props) => {
-		return props.theme.colors.main
-	}};
+	background-color: ${(props) => props.theme.colors.main};
 	border-bottom-width: 1;
-	border-bottom-color: ${(props) => {
-		return props.theme.colors.grey
-	}};
+	border-bottom-color: ${(props) => props.theme.colors.grey};
 `
 
 export const Content = styled.View`
@@ -26,15 +22,11 @@ export const Content = styled.View`
 export const Title = styled.Text`
 	font-size: 20;
 	font-weight: bold;
-	color: ${(props) => {
-		return props.theme.colors.white
-	}};
+	color: ${(props) => props.theme.colors.white};
 	margin-bottom: 5;
 `
 
 export const Subtitle = styled.Text`
 	font-size: 16;
-	color: ${(props) => {
-		return props.theme.colors.white
-	}};
+	color: ${(props) => props.theme.colors.white};
 `

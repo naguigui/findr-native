@@ -1,10 +1,8 @@
 import styled from 'styled-components/native'
 
 export const ButtonText = styled.Text`
-	color: ${(props) => {
-		return props.isSecondary
+	color: ${(props) => props.isSecondary
 			? props.theme.colors.main
-			: props.theme.colors.white
-	}};
+			: props.theme.colors.white};
 	font-size: 18;
 `

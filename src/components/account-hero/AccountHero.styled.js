@@ -4,9 +4,7 @@ export const AccountHeroWrapper = styled.View`
 	display: flex;
 	flex-direction: column;
 	height: 200;
-	background-color: ${(props) => {
-		return props.theme.colors.white
-	}};
+	background-color: ${(props) => props.theme.colors.white};
 	align-items: center;
 	justify-content: center;
 	margin-top: 8;
@@ -14,15 +12,11 @@ export const AccountHeroWrapper = styled.View`
 
 export const NameLabel = styled.Text`
 	font-size: 18;
-	color: ${(props) => {
-		return props.theme.colors.cloud_burst
-	}};
+	color: ${(props) => props.theme.colors.cloud_burst};
 `
 
 export const EditAccountLabel = styled.Text`
 	font-size: 12;
-	color: ${(props) => {
-		return props.theme.colors.main
-	}};
+	color: ${(props) => props.theme.colors.main};
 	font-weight: bold;
 `

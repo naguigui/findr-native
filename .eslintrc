@@ -18,7 +18,7 @@
 		"jsx-quotes": [2, "prefer-double"],
 		"linebreak-style": [2, "unix"],
 		"array-bracket-spacing": 2,
-		"arrow-body-style": ["error", "always"],
+		"arrow-body-style": ["error", "as-needed"],
 		"arrow-spacing": 2,
 		"block-scoped-var": 1,
 		"block-spacing": 2,

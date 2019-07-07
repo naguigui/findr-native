@@ -1,3 +1,1 @@
-export const apolloErrorStrip = (errorMsg) => {
-	return errorMsg.replace('GraphQL error:', ' ').trim()
-}
+export const apolloErrorStrip = (errorMsg) => errorMsg.replace('GraphQL error:', ' ').trim()

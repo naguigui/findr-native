@@ -44,21 +44,17 @@ const CreateRoomContainer = (props) => {
 	)
 }
 
-const CreateRoomContainerWithMutation = (props) => {
-	return (
+const CreateRoomContainerWithMutation = (props) => (
 		<Mutation mutation={CREATE_ROOM_MUTATION}>
-			{(createRoomAction, { loading, data }) => {
-				return (
+			{(createRoomAction, { loading, data }) => (
 					<CreateRoomContainer
 						createRoomAction={createRoomAction}
 						isLoading={loading}
 						mutationData={data}
 						{...props}
 					/>
-				)
-			}}
+				)}
 		</Mutation>
 	)
-}
 
 export default CreateRoomContainerWithMutation

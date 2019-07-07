@@ -58,8 +58,7 @@ const LoginContainer = (props) => {
 	)
 }
 
-const LoginContainerWithMutation = (props) => {
-	return (
+const LoginContainerWithMutation = (props) => (
 		<Mutation
 			mutation={LOGIN_MUTATION}
 			onCompleted={async (data) => {
@@ -70,17 +69,14 @@ const LoginContainerWithMutation = (props) => {
 				})
 			}}
 		>
-			{(loginAction, { loading }) => {
-				return (
+			{(loginAction, { loading }) => (
 					<LoginContainer
 						loginAction={loginAction}
 						isLoading={loading}
 						{...props}
 					/>
-				)
-			}}
+				)}
 		</Mutation>
 	)
-}
 
 export default LoginContainerWithMutation

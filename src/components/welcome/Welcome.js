@@ -9,8 +9,7 @@ import * as Routes from '../../utils/routeNames'
 
 import * as S from './Welcome.styled'
 
-const Welcome = () => {
-	return (
+const Welcome = () => (
 		<Layout>
 			<S.WelcomeWrapper>
 				<S.Content>
@@ -24,11 +23,9 @@ const Welcome = () => {
 							rounded={true}
 							bordered={true}
 							light={true}
-							onPress={() => {
-								return navigationService.navigate({
+							onPress={() => navigationService.navigate({
 									routeName: Routes.REGISTRATION_ROUTE,
-								})
-							}}
+								})}
 						/>
 					</S.ButtonWrapper>
 					<S.ButtonWrapper>
@@ -37,17 +34,14 @@ const Welcome = () => {
 							rounded={true}
 							bordered={true}
 							light={true}
-							onPress={() => {
-								return navigationService.navigate({
+							onPress={() => navigationService.navigate({
 									routeName: Routes.LOGIN_ROUTE,
-								})
-							}}
+								})}
 						/>
 					</S.ButtonWrapper>
 				</S.Content>
 			</S.WelcomeWrapper>
 		</Layout>
 	)
-}
 
 export default Welcome

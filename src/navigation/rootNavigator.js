@@ -50,32 +50,26 @@ const HomeStack = createStackNavigator(
 	{
 		[Routes.HOME_ROUTE]: {
 			screen: HomeContainer,
-			navigationOptions: ({ navigation }) => {
-				return {
+			navigationOptions: ({ navigation }) => ({
 					header: (
 						<CustomHeader
 							title="Welcome"
 							subtitle={navigation.getParam('subtitle')}
 						/>
 					),
-				}
-			},
+				}),
 		},
 		[Routes.CREATE_ROOM_ROUTE]: {
 			screen: CreateRoomContainer,
-			navigationOptions: () => {
-				return {
+			navigationOptions: () => ({
 					title: 'Create Room',
-				}
-			},
+				}),
 		},
 		[Routes.PARTY_ROUTE]: {
 			screen: PartyContainer,
-			navigationOptions: () => {
-				return {
+			navigationOptions: () => ({
 					title: 'Your Party',
-				}
-			},
+				}),
 		},
 	},
 	{
@@ -86,11 +80,9 @@ const HomeStack = createStackNavigator(
 const AccountSettingsStack = createStackNavigator({
 	[Routes.ACCOUNT_SETTINGS_ROUTE]: {
 		screen: AccountViewContainer,
-		navigationOptions: () => {
-			return {
+		navigationOptions: () => ({
 				header: <CustomHeader title="Account" subtitle="Settings" />,
-			}
-		},
+			}),
 	},
 })
 
@@ -127,8 +119,7 @@ const TabNavigator = createBottomTabNavigator(
 	},
 )
 
-export const generateMainNavigator = (authenticated) => {
-	return createSwitchNavigator(
+export const generateMainNavigator = (authenticated) => createSwitchNavigator(
 		{
 			[Routes.AUTH_ROUTE]: AuthStack,
 			[Routes.APP_ROUTE]: TabNavigator,
@@ -137,4 +128,3 @@ export const generateMainNavigator = (authenticated) => {
 			initialRouteName: authenticated ? Routes.APP_ROUTE : Routes.AUTH_ROUTE,
 		},
 	)
-}

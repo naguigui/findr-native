@@ -7,13 +7,9 @@ import * as S from './PartyList.styled.js'
 const PartyList = (props) => {
 	const { party, roomName } = props
 
-	const renderUserInParty = ({ item }) => {
-		return <ListItem key={item._id} label={item.name} subtitle={item.email} />
-	}
+	const renderUserInParty = ({ item }) => <ListItem key={item._id} label={item.name} subtitle={item.email} />
 
-	const keyExtractor = (item) => {
-		return item._id
-	}
+	const keyExtractor = (item) => item._id
 
 	return (
 		<S.PartyListWrapper>
