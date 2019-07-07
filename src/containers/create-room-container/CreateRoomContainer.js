@@ -3,6 +3,9 @@ import { gql } from 'apollo-boost'
 import { Mutation } from 'react-apollo'
 import { Layout, CreateRoom } from '../../components'
 
+import navigationService from '../../services/navigationService'
+import * as Routes from '../../utils/routeNames'
+
 const CREATE_ROOM_MUTATION = gql`
 	mutation createRoom($name: String!) {
 		createRoom(input: { name: $name }) {
@@ -45,16 +48,23 @@ const CreateRoomContainer = (props) => {
 }
 
 const CreateRoomContainerWithMutation = (props) => (
-		<Mutation mutation={CREATE_ROOM_MUTATION}>
-			{(createRoomAction, { loading, data }) => (
-					<CreateRoomContainer
-						createRoomAction={createRoomAction}
-						isLoading={loading}
-						mutationData={data}
-						{...props}
-					/>
-				)}
-		</Mutation>
-	)
+	<Mutation
+		mutation={CREATE_ROOM_MUTATION}
+		onCompleted={() => {
+			navigationService.navigate({
+				routeName: Routes.PARTY_ROUTE,
+			})
+		}}
+	>
+		{(createRoomAction, { loading, data }) => (
+			<CreateRoomContainer
+				createRoomAction={createRoomAction}
+				isLoading={loading}
+				mutationData={data}
+				{...props}
+			/>
+		)}
+	</Mutation>
+)
 
 export default CreateRoomContainerWithMutation

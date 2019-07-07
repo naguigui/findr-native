@@ -53,15 +53,11 @@ const AccountViewContainer = (props) => {
 }
 
 const AccountViewContainerWithQuery = (props) => (
-		<Query query={GET_USER_QUERY_CACHE}>
-			{({ loading, data }) => (
-					<AccountViewContainer
-						queryData={data}
-						isLoading={loading}
-						{...props}
-					/>
-				)}
-		</Query>
-	)
+	<Query query={GET_USER_QUERY_CACHE}>
+		{({ loading, data }) => (
+			<AccountViewContainer queryData={data} isLoading={loading} {...props} />
+		)}
+	</Query>
+)
 
 export default AccountViewContainerWithQuery

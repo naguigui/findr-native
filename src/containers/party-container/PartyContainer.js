@@ -1,39 +1,57 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
+import { Query } from 'react-apollo'
 import { gql } from 'apollo-boost'
-import client from '../../graphql/client'
+import { isEmpty } from 'lodash'
 import { Layout, PartyList } from '../../components'
 
 const GET_USER = gql`
 	{
 		user {
 			room {
+				roomOwner {
+					name
+				}
+				sessionStarted
 				name
+				_id
 				party {
-					_id
 					name
 					email
+					_id
 				}
 			}
 		}
 	}
 `
 
-const PartyContainer = () => {
-	const [room, setRoom] = useState([])
-
-	useEffect(() => {
-		const { user } = client.readQuery({
-			query: GET_USER,
-		})
-
-		setRoom(user.room)
-	}, [])
+const PartyContainer = (props) => {
+	const { isLoading, queryData, refetch } = props
 
 	return (
-		<Layout isAuthenticated={true}>
-			<PartyList party={room.party} roomName={room.name} />
+		<Layout isAuthenticated={true} isLoading={isLoading}>
+			{!isEmpty(queryData) && (
+				<PartyList
+					party={queryData.user.room.party}
+					roomName={queryData.user.room.name}
+					refetch={refetch}
+					isLoading={isLoading}
+				/>
+			)}
 		</Layout>
 	)
 }
 
-export default PartyContainer
+const PartyContainerWithQuery = (props) => (
+	<Query query={GET_USER}>
+		{({ loading, data, refetch }) => (
+			<PartyContainer
+				queryData={data}
+				isLoading={loading}
+				{...props}
+				refetch={refetch}
+			/>
+		)}
+	</Query>
+)
+
+export default PartyContainerWithQuery

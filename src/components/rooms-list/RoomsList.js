@@ -1,7 +1,7 @@
 import React from 'react'
 import ListItem from '../list-item'
 
-import * as S from './Rooms.styled.js'
+import * as S from './RoomsList.styled.js'
 
 const Rooms = (props) => {
 	const { room, onNavigateToParty } = props

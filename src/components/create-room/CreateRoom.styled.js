@@ -6,7 +6,7 @@ export const CreateRoomWrapper = styled.View`
 	flex: 1;
 	padding-left: 16;
 	padding-right: 16;
-	margin-top: 16%;
+	margin-top: 32;
 `
 
 export const Title = styled.Text`
@@ -21,4 +21,5 @@ export const ButtonWrapper = styled.View`
 	flex-direction: column;
 	flex: 1;
 	justify-content: flex-end;
+	margin-bottom: 16;
 `

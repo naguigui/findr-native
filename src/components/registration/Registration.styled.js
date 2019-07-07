@@ -6,7 +6,7 @@ export const RegistrationWrapper = styled.View`
 	flex: 1;
 	padding-left: 18;
 	padding-right: 18;
-	margin-top: 16%;
+	margin-top: 32;
 `
 
 export const Title = styled.Text`

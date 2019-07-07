@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { isEmpty } from 'lodash'
 import { Query } from 'react-apollo'
 import { gql } from 'apollo-boost'
-import { Home, Layout, Rooms } from '../../components'
+import { Home, Layout } from '../../components'
 
 import { usePrevious } from '../../hooks'
 import navigationService from '../../services/navigationService'
@@ -41,6 +41,11 @@ const HomeContainer = (props) => {
 			navigation.setParams({
 				subtitle: user.name,
 			})
+			if (!isEmpty(user.room)) {
+				navigationService.replace({
+					routeName: Routes.PARTY_ROUTE,
+				})
+			}
 		}
 	}, [user])
 
@@ -57,28 +62,20 @@ const HomeContainer = (props) => {
 						onJoinRoom={() => {}}
 					/>
 				)}
-				{!isEmpty(user.room) && (
-					<Rooms
-						room={user.room}
-						onNavigateToParty={() => navigationService.navigate({
-								routeName: Routes.PARTY_ROUTE,
-							})}
-					/>
-				)}
 			</>
 		</Layout>
 	)
 }
 
 const HomeContainerWithQuery = (props) => (
-		<Query query={GET_USER_QUERY}>
-			{({ loading, data }) => {
-				if (loading) {
-					return <S.LoadingText>Loading...</S.LoadingText>
-				}
-				return <HomeContainer queryData={data} isLoading={loading} {...props} />
-			}}
-		</Query>
-	)
+	<Query query={GET_USER_QUERY}>
+		{({ loading, data }) => {
+			if (loading) {
+				return <S.LoadingText>Loading...</S.LoadingText>
+			}
+			return <HomeContainer queryData={data} isLoading={loading} {...props} />
+		}}
+	</Query>
+)
 
 export default HomeContainerWithQuery
