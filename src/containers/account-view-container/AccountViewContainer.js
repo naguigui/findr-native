@@ -3,7 +3,7 @@ import { Query } from 'react-apollo'
 import { gql } from 'apollo-boost'
 import { isEmpty } from 'lodash'
 
-import { AccountHero, ListItem, Layout } from '../../components'
+import { AccountView, Layout } from '../../components'
 
 import AuthService from '../../services/authService'
 import navigationService from '../../services/navigationService'
@@ -11,8 +11,6 @@ import navigationService from '../../services/navigationService'
 import { resetCache } from '../../graphql/client'
 
 import { usePrevious } from '../../hooks'
-
-import * as S from './AccountViewContainer.styled'
 
 const GET_USER_QUERY_CACHE = gql`
 	{
@@ -49,10 +47,7 @@ const AccountViewContainer = (props) => {
 
 	return (
 		<Layout isAuthenticated={true}>
-			<S.AccountHeroWrapper>
-				<AccountHero name={name} />
-			</S.AccountHeroWrapper>
-			<ListItem label="Log out" onPress={logout} />
+			<AccountView logout={logout} name={name} />
 		</Layout>
 	)
 }

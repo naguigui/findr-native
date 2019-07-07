@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { isEmpty } from 'lodash'
 import { Query } from 'react-apollo'
 import { gql } from 'apollo-boost'
-import { Home, Layout } from '../../components'
+import { Home, Layout, Rooms } from '../../components'
 
 import { usePrevious } from '../../hooks'
 import navigationService from '../../services/navigationService'
@@ -27,7 +27,6 @@ const GET_USER_QUERY = gql`
 const HomeContainer = (props) => {
 	const {
 		queryData: { user },
-		isLoading,
 		navigation,
 	} = props
 	const prevUser = usePrevious(user)
@@ -43,8 +42,7 @@ const HomeContainer = (props) => {
 	return (
 		<Layout isAuthenticated>
 			<>
-				{isLoading && <S.LoadingText>Loading...</S.LoadingText>}
-				{!isLoading && user && isEmpty(user.room) && (
+				{isEmpty(user.room) && (
 					<Home
 						onCreateRoom={() => {
 							return navigationService.navigate({
@@ -54,6 +52,7 @@ const HomeContainer = (props) => {
 						onJoinRoom={() => {}}
 					/>
 				)}
+				{!isEmpty(user.room) && <Rooms room={user.room} />}
 			</>
 		</Layout>
 	)
@@ -63,6 +62,9 @@ const HomeContainerWithQuery = (props) => {
 	return (
 		<Query query={GET_USER_QUERY}>
 			{({ loading, data }) => {
+				if (loading) {
+					return <S.LoadingText>Loading...</S.LoadingText>
+				}
 				return <HomeContainer queryData={data} isLoading={loading} {...props} />
 			}}
 		</Query>

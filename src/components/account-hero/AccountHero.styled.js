@@ -15,7 +15,7 @@ export const AccountHeroWrapper = styled.View`
 export const NameLabel = styled.Text`
 	font-size: 18;
 	color: ${(props) => {
-		return props.theme.colors.black
+		return props.theme.colors.cloud_burst
 	}};
 `
 

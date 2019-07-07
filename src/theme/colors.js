@@ -1,4 +1,4 @@
-export const MAIN_BLUE = '#34a391'
-export const WHITE = '#fff'
-export const BLACK = '#000'
-export const GREY = '#d3dded'
+export const MAIN_BLUE = '#34A391'
+export const WHITE = '#FFFFFF'
+export const CLOUD_BURST = '#203148'
+export const GREY = '#D0D9E2'

@@ -79,7 +79,7 @@ const AccountSettingsStack = createStackNavigator({
 		screen: AccountViewContainer,
 		navigationOptions: () => {
 			return {
-				header: <CustomHeader title="Account" />,
+				header: <CustomHeader title="Account" subtitle="Settings" />,
 			}
 		},
 	},
@@ -104,7 +104,7 @@ const TabNavigator = createBottomTabNavigator(
 					<Ionicons
 						name={iconName}
 						size={32}
-						color={focused ? Colors.BLACK : Colors.GREY}
+						color={focused ? Colors.CLOUD_BURST : Colors.GREY}
 					/>
 				)
 			}

@@ -25,7 +25,7 @@ const Input = (props) => {
 			</Label>
 			<NativeBaseInput
 				style={{
-					color: isSecondary ? Colors.BLACK : Colors.WHITE,
+					color: isSecondary ? Colors.CLOUD_BURST : Colors.WHITE,
 					fontWeight: 'bold',
 				}}
 				value={value}

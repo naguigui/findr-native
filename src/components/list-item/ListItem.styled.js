@@ -4,15 +4,11 @@ export const ListItemWrapper = styled.TouchableOpacity`
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	height: 54;
+	height: 64;
 	background-color: ${(props) => {
 		return props.theme.colors.white
 	}};
-	border-top-width: 1;
 	border-bottom-width: 1;
-	border-top-color: ${(props) => {
-		return props.theme.colors.grey
-	}};
 	border-bottom-color: ${(props) => {
 		return props.theme.colors.grey
 	}};
@@ -20,8 +16,9 @@ export const ListItemWrapper = styled.TouchableOpacity`
 
 export const Label = styled.Text`
 	font-size: 18;
+	font-weight: bold;
 	color: ${(props) => {
-		return props.theme.colors.black
+		return props.theme.colors.cloud_burst
 	}};
 	padding-left: 16;
 `
