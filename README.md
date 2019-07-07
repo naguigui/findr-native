@@ -15,6 +15,7 @@ Using yarn:
 - Dev watcher connected to local server running iOS: `yarn ios`
 - Dev watcher connected to local server running iOS: `yarn android`
 - Prettier: `yarn format`
+- Plop runner: `yarn generate`
 
 ## Application structure
 
