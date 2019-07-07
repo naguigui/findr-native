@@ -7,3 +7,5 @@ export const ACCOUNT_SETTINGS_ROUTE = 'AccountSettings'
 
 export const APP_ROUTE = 'App'
 export const AUTH_ROUTE = 'Auth'
+
+export const PARTY_ROUTE = 'PartyRoute'

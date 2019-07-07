@@ -19,6 +19,11 @@ const GET_USER_QUERY = gql`
 				_id
 				sessionStarted
 				name
+				party {
+					_id
+					name
+					email
+				}
 			}
 		}
 	}
@@ -45,14 +50,23 @@ const HomeContainer = (props) => {
 				{isEmpty(user.room) && (
 					<Home
 						onCreateRoom={() => {
-							return navigationService.navigate({
+							navigationService.navigate({
 								routeName: Routes.CREATE_ROOM_ROUTE,
 							})
 						}}
 						onJoinRoom={() => {}}
 					/>
 				)}
-				{!isEmpty(user.room) && <Rooms room={user.room} />}
+				{!isEmpty(user.room) && (
+					<Rooms
+						room={user.room}
+						onNavigateToParty={() => {
+							return navigationService.navigate({
+								routeName: Routes.PARTY_ROUTE,
+							})
+						}}
+					/>
+				)}
 			</>
 		</Layout>
 	)

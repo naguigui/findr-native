@@ -8,6 +8,6 @@ export const AccountViewWrapper = styled.View`
 	padding-right: 16;
 `
 
-export const AccountHeroWrapper = styled.View`
+export const AccountHeroWrapper = styled.TouchableOpacity`
 	margin-bottom: 8;
 `

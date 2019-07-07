@@ -12,6 +12,7 @@ import {
 	LoginContainer,
 	AccountViewContainer,
 	HomeContainer,
+	PartyContainer,
 } from '../containers'
 
 import { Welcome, CustomHeader } from '../components'
@@ -65,6 +66,14 @@ const HomeStack = createStackNavigator(
 			navigationOptions: () => {
 				return {
 					title: 'Create Room',
+				}
+			},
+		},
+		[Routes.PARTY_ROUTE]: {
+			screen: PartyContainer,
+			navigationOptions: () => {
+				return {
+					title: 'Your Party',
 				}
 			},
 		},

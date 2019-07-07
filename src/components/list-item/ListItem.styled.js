@@ -20,5 +20,13 @@ export const Label = styled.Text`
 	color: ${(props) => {
 		return props.theme.colors.cloud_burst
 	}};
-	padding-left: 16;
+	margin-bottom: 8;
+`
+
+export const Subtitle = styled.Text`
+	font-size: 14;
+	font-weight: bold;
+	color: ${(props) => {
+		return props.theme.colors.cloud_burst
+	}};
 `
