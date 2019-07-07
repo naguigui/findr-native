@@ -30,4 +30,27 @@ module.exports = (plop) => {
 			return actions
 		},
 	})
+
+	plop.setGenerator('container', {
+		description: 'React container component',
+		prompts: [
+			{
+				type: 'input',
+				name: 'name',
+				message: 'Enter container name (example: Table)',
+			},
+		],
+		actions: [
+			{
+				type: 'add',
+				path: 'src/containers/{{dashCase name}}/{{properCase name}}.js',
+				templateFile: 'templates/container.hbs',
+			},
+			{
+				type: 'add',
+				path: 'src/containers/{{dashCase name}}/index.js',
+				templateFile: 'templates/index.hbs',
+			},
+		],
+	})
 }
