@@ -7,6 +7,14 @@ import Registration from '../../components/registration'
 import { REGISTRATION_MUTATION } from '../../graphql/mutations/authMutations'
 import navigationService from '../../services/navigationService'
 
+import { LOGIN_ROUTE } from '../../utils/routeNames'
+
+const navigateToLogin = () => {
+	navigationService.navigate({
+		routeName: LOGIN_ROUTE,
+	})
+}
+
 const RegistrationContainer = (props) => {
 	const { registrationAction, isLoading } = props
 
@@ -33,12 +41,6 @@ const RegistrationContainer = (props) => {
 		})
 	}
 
-	const navigateToLogin = () => {
-		navigationService.navigate({
-			routeName: 'Login',
-		})
-	}
-
 	return (
 		<Layout isLoading={isLoading}>
 			<Registration
@@ -55,14 +57,7 @@ const RegistrationContainer = (props) => {
 
 const RegistrationContainerWithMutation = (props) => {
 	return (
-		<Mutation
-			mutation={REGISTRATION_MUTATION}
-			onCompleted={() => {
-				navigationService.navigate({
-					routeName: 'Login',
-				})
-			}}
-		>
+		<Mutation mutation={REGISTRATION_MUTATION} onCompleted={navigateToLogin}>
 			{(registrationAction, { loading, data }) => (
 				<RegistrationContainer
 					data={data}

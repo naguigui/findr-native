@@ -25,12 +25,7 @@ const Login = (props) => {
 				</S.InputWrapper>
 			</S.FormWrapper>
 			<S.ButtonWrapper>
-				<Button
-					btnText="Login"
-					onPress={onSubmit}
-					rounded={true}
-					light={true}
-				/>
+				<Button btnText="Login" onPress={onSubmit} isSecondary={true} />
 			</S.ButtonWrapper>
 			<S.FooterText onPress={navigateToRegistration}>
 				Don't have an account? Register for one

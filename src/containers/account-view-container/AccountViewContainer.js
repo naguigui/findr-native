@@ -1,19 +1,31 @@
 import React, { useEffect, useState } from 'react'
 import { Query } from 'react-apollo'
+import { gql } from 'apollo-boost'
 import { isEmpty } from 'lodash'
 
-import AccountHero from '../../components/account-hero'
-import ListItem from '../../components/list-item'
-import Layout from '../../components/layout'
+import { AccountHero, ListItem, Layout } from '../../components'
 
 import AuthService from '../../services/authService'
 import navigationService from '../../services/navigationService'
+
 import { resetCache } from '../../graphql/client'
 
-import { GET_USER } from '../../graphql/queries/userQueries'
 import { usePrevious } from '../../hooks'
 
 import * as S from './AccountViewContainer.styled'
+
+const GET_USER_QUERY_CACHE = gql`
+	{
+		user @client {
+			name
+			room {
+				_id
+				sessionStarted
+				name
+			}
+		}
+	}
+`
 
 const AccountViewContainer = (props) => {
 	const { queryData } = props
@@ -47,7 +59,7 @@ const AccountViewContainer = (props) => {
 
 const AccountViewContainerWithQuery = (props) => {
 	return (
-		<Query query={GET_USER}>
+		<Query query={GET_USER_QUERY_CACHE}>
 			{({ loading, data }) => {
 				return (
 					<AccountViewContainer

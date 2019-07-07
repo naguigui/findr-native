@@ -5,6 +5,8 @@ import Button from '../../components/button'
 
 import navigationService from '../../services/navigationService'
 
+import * as Routes from '../../utils/routeNames'
+
 import * as S from './Welcome.styled'
 
 const Welcome = () => {
@@ -14,11 +16,7 @@ const Welcome = () => {
 				<S.Content>
 					<S.Title>Welcome to Titan.</S.Title>
 					<S.ButtonWrapper>
-						<Button
-							btnText="Continue with Facebook"
-							rounded={true}
-							light={true}
-						/>
+						<Button btnText="Continue with Facebook" isSecondary={true} />
 					</S.ButtonWrapper>
 					<S.ButtonWrapper>
 						<Button
@@ -28,7 +26,7 @@ const Welcome = () => {
 							light={true}
 							onPress={() =>
 								navigationService.navigate({
-									routeName: 'Registration',
+									routeName: Routes.REGISTRATION_ROUTE,
 								})
 							}
 						/>
@@ -41,7 +39,7 @@ const Welcome = () => {
 							light={true}
 							onPress={() =>
 								navigationService.navigate({
-									routeName: 'Login',
+									routeName: Routes.LOGIN_ROUTE,
 								})
 							}
 						/>

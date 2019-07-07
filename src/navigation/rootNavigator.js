@@ -10,10 +10,12 @@ import {
 	RegistrationContainer,
 	LoginContainer,
 	AccountViewContainer,
+	HomeContainer,
 } from '../containers'
 
-import Welcome from '../components/welcome'
-import CustomHeader from '../components/custom-header'
+import { Welcome, CustomHeader } from '../components'
+
+import * as Routes from '../utils/routeNames'
 
 import * as Colors from '../theme/colors'
 import { View, Text } from 'react-native'
@@ -33,19 +35,19 @@ const defaultNavigationOptions = {
 
 const AuthStack = createStackNavigator(
 	{
-		Welcome: {
+		[Routes.WELCOME_ROUTE]: {
 			screen: Welcome,
 			navigationOptions: () => ({
 				...defaultNavigationOptions,
 			}),
 		},
-		Login: {
+		[Routes.LOGIN_ROUTE]: {
 			screen: LoginContainer,
 			navigationOptions: () => ({
 				...defaultNavigationOptions,
 			}),
 		},
-		Registration: {
+		[Routes.REGISTRATION_ROUTE]: {
 			screen: RegistrationContainer,
 			navigationOptions: () => ({
 				...defaultNavigationOptions,
@@ -53,12 +55,28 @@ const AuthStack = createStackNavigator(
 		},
 	},
 	{
-		initialRouteName: 'Welcome',
+		initialRouteName: Routes.WELCOME_ROUTE,
 	},
 )
 
+const HomeStack = createStackNavigator({
+	[Routes.HOME_ROUTE]: {
+		screen: HomeContainer,
+		navigationOptions: ({ navigation }) => {
+			return {
+				header: (
+					<CustomHeader
+						title="Welcome"
+						subtitle={navigation.getParam('subtitle')}
+					/>
+				),
+			}
+		},
+	},
+})
+
 const AccountSettingsStack = createStackNavigator({
-	Account: {
+	[Routes.ACCOUNT_SETTINGS_ROUTE]: {
 		screen: AccountViewContainer,
 		navigationOptions: () => {
 			return {
@@ -70,8 +88,8 @@ const AccountSettingsStack = createStackNavigator({
 
 const TabNavigator = createBottomTabNavigator(
 	{
-		Home: DummyComponent,
-		AccountSettings: AccountSettingsStack,
+		[Routes.HOME_ROUTE]: HomeStack,
+		[Routes.ACCOUNT_SETTINGS_ROUTE]: AccountSettingsStack,
 	},
 	{
 		defaultNavigationOptions: ({ navigation }) => ({
@@ -79,9 +97,9 @@ const TabNavigator = createBottomTabNavigator(
 				const { routeName } = navigation.state
 				let IconComponent = Ionicons
 				let iconName
-				if (routeName === 'Home') {
+				if (routeName === Routes.HOME_ROUTE) {
 					iconName = 'md-home'
-				} else if (routeName === 'AccountSettings') {
+				} else if (routeName === Routes.ACCOUNT_SETTINGS_ROUTE) {
 					iconName = 'md-person'
 				}
 				return (
@@ -102,11 +120,11 @@ const TabNavigator = createBottomTabNavigator(
 export const generateMainNavigator = (authenticated) => {
 	return createSwitchNavigator(
 		{
-			Auth: AuthStack,
-			App: TabNavigator,
+			[Routes.AUTH_ROUTE]: AuthStack,
+			[Routes.APP_ROUTE]: TabNavigator,
 		},
 		{
-			initialRouteName: authenticated ? 'App' : 'Auth',
+			initialRouteName: authenticated ? Routes.APP_ROUTE : Routes.AUTH_ROUTE,
 		},
 	)
 }
