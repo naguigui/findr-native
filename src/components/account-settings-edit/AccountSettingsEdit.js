@@ -12,6 +12,7 @@ const AccountSettingsEdit = (props) => {
 		onChange,
 		namePlaceholder,
 		emailPlaceholder,
+		updateUser,
 	} = props
 	return (
 		<S.AccountSettingsEditWrapper>
@@ -34,7 +35,7 @@ const AccountSettingsEdit = (props) => {
 				/>
 			</S.InputWrapper>
 			<S.ButtonWrapper>
-				<Button btnText="Update user" onPress={() => {}} />
+				<Button btnText="Update user" onPress={updateUser} />
 			</S.ButtonWrapper>
 		</S.AccountSettingsEditWrapper>
 	)

@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import { gql } from 'apollo-boost'
-import { Query } from 'react-apollo'
+import { Query, Mutation } from 'react-apollo'
 import { isEmpty } from 'lodash'
 import { Layout, AccountSettingsEdit } from '../../components'
+
+import { showToast } from '../../utils/showToast'
 
 const GET_USER_QUERY = gql`
 	{
@@ -13,12 +15,35 @@ const GET_USER_QUERY = gql`
 	}
 `
 
+const UPDATE_USER_MUTATION = gql`
+	mutation updateUser($name: String!) {
+		updateUser(input: { name: $name }) {
+			name
+			email
+		}
+	}
+`
+
 const AccountSettingsEditCounter = (props) => {
-	const { isLoading, queryData } = props
+	const {
+		queryIsLoading,
+		queryData,
+		mutationIsLoading,
+		updateUserMutation,
+	} = props
+
 	const [formValues, setFormValues] = useState({
 		name: '',
 		email: '',
 	})
+
+	const updateUser = () => {
+		updateUserMutation({
+			variables: {
+				name: formValues.name,
+			},
+		})
+	}
 
 	const onChange = (name, value) => {
 		setFormValues({
@@ -26,15 +51,17 @@ const AccountSettingsEditCounter = (props) => {
 			[name]: value,
 		})
 	}
+
 	return (
-		<Layout isAuthenticated>
-			{!isLoading && !isEmpty(queryData) && (
+		<Layout isAuthenticated isLoading={queryIsLoading || mutationIsLoading}>
+			{!queryIsLoading && !isEmpty(queryData) && (
 				<AccountSettingsEdit
 					nameValue={formValues.name}
 					emailValue={formValues.email}
 					onChange={onChange}
 					namePlaceholder={queryData.user.name}
 					emailPlaceholder={queryData.user.email}
+					updateUser={updateUser}
 				/>
 			)}
 		</Layout>
@@ -43,12 +70,25 @@ const AccountSettingsEditCounter = (props) => {
 
 const AccountSettingsEditCounterWithQuery = (props) => (
 	<Query query={GET_USER_QUERY}>
-		{({ loading, data }) => (
-			<AccountSettingsEditCounter
-				queryData={data}
-				isLoading={loading}
-				{...props}
-			/>
+		{({ loading: queryLoading, data: queryData }) => (
+			<Mutation
+				mutation={UPDATE_USER_MUTATION}
+				onCompleted={() => {
+					showToast({
+						message: 'Account successfully updated.',
+					})
+				}}
+			>
+				{(updateUserMutation, { loading: mutationLoading }) => (
+					<AccountSettingsEditCounter
+						queryData={queryData}
+						queryIsLoading={queryLoading}
+						mutationIsLoading={mutationLoading}
+						updateUserMutation={updateUserMutation}
+						{...props}
+					/>
+				)}
+			</Mutation>
 		)}
 	</Query>
 )
