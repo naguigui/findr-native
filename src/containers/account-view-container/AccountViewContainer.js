@@ -9,6 +9,7 @@ import AuthService from '../../services/authService'
 import navigationService from '../../services/navigationService'
 
 import { resetCache } from '../../graphql/client'
+import * as Routes from '../../utils/routeNames'
 
 import { usePrevious } from '../../hooks'
 
@@ -41,13 +42,21 @@ const AccountViewContainer = (props) => {
 		await AuthService.deauthenticate()
 		resetCache()
 		navigationService.navigate({
-			routeName: 'Auth',
+			routeName: Routes.AUTH_ROUTE,
 		})
 	}
 
 	return (
 		<Layout isAuthenticated={true}>
-			<AccountView logout={logout} name={name} />
+			<AccountView
+				logout={logout}
+				name={name}
+				navigateToAccountSettingsEdit={() =>
+					navigationService.navigate({
+						routeName: Routes.ACCOUNT_SETTINGS_EDIT_ROUTE,
+					})
+				}
+			/>
 		</Layout>
 	)
 }

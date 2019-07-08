@@ -11,6 +11,7 @@ import {
 	RegistrationContainer,
 	LoginContainer,
 	AccountViewContainer,
+	AccountSettingsEditContainer,
 	HomeContainer,
 	PartyContainer,
 } from '../containers'
@@ -51,25 +52,25 @@ const HomeStack = createStackNavigator(
 		[Routes.HOME_ROUTE]: {
 			screen: HomeContainer,
 			navigationOptions: ({ navigation }) => ({
-					header: (
-						<CustomHeader
-							title="Welcome"
-							subtitle={navigation.getParam('subtitle')}
-						/>
-					),
-				}),
+				header: (
+					<CustomHeader
+						title="Welcome"
+						subtitle={navigation.getParam('subtitle')}
+					/>
+				),
+			}),
 		},
 		[Routes.CREATE_ROOM_ROUTE]: {
 			screen: CreateRoomContainer,
 			navigationOptions: () => ({
-					title: 'Create Room',
-				}),
+				title: 'Create Room',
+			}),
 		},
 		[Routes.PARTY_ROUTE]: {
 			screen: PartyContainer,
 			navigationOptions: () => ({
-					title: 'Your Party',
-				}),
+				title: 'Your Party',
+			}),
 		},
 	},
 	{
@@ -77,14 +78,26 @@ const HomeStack = createStackNavigator(
 	},
 )
 
-const AccountSettingsStack = createStackNavigator({
-	[Routes.ACCOUNT_SETTINGS_ROUTE]: {
-		screen: AccountViewContainer,
-		navigationOptions: () => ({
+const AccountSettingsStack = createStackNavigator(
+	{
+		[Routes.ACCOUNT_SETTINGS_ROUTE]: {
+			screen: AccountViewContainer,
+			navigationOptions: () => ({
 				header: <CustomHeader title="Account" subtitle="Settings" />,
 			}),
+		},
+		[Routes.ACCOUNT_SETTINGS_EDIT_ROUTE]: {
+			screen: AccountSettingsEditContainer,
+			navigationOptions: () => ({
+				title: 'Edit account',
+			}),
+		},
 	},
-})
+	{
+		defaultNavigationOptions,
+		mode: 'modal',
+	},
+)
 
 const TabNavigator = createBottomTabNavigator(
 	{
@@ -119,7 +132,8 @@ const TabNavigator = createBottomTabNavigator(
 	},
 )
 
-export const generateMainNavigator = (authenticated) => createSwitchNavigator(
+export const generateMainNavigator = (authenticated) =>
+	createSwitchNavigator(
 		{
 			[Routes.AUTH_ROUTE]: AuthStack,
 			[Routes.APP_ROUTE]: TabNavigator,

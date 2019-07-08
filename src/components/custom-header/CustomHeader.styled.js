@@ -4,7 +4,6 @@ import { SafeAreaView } from 'react-navigation'
 export const CustomHeaderWrapper = styled(SafeAreaView)`
 	display: flex;
 	flex-direction: column;
-	flex: 1;
 	min-height: 100;
 	width: 100%;
 	background-color: ${(props) => props.theme.colors.main};

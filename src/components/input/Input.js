@@ -28,6 +28,7 @@ const Input = (props) => {
 					color: isSecondary ? Colors.CLOUD_BURST : Colors.WHITE,
 					fontWeight: 'bold',
 				}}
+				placeholder="Josh Vo"
 				value={value}
 				onChangeText={(val) => onChange(name, val)}
 				secureTextEntry={isPassword}

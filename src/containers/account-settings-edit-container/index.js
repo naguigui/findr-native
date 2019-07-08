@@ -1,0 +1,3 @@
+import AccountSettingsEditContainer from './AccountSettingsEditContainer'
+
+export default AccountSettingsEditContainer
