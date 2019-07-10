@@ -9,6 +9,7 @@ import theme from './src/theme/theme'
 
 import client from './src/graphql/client'
 
+// eslint-disable-next-line
 console.disableYellowBox = true
 
 export default function App() {

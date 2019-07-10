@@ -1,4 +1,7 @@
 export { default as AccountViewContainer } from './account-view-container'
+export {
+	default as AccountSettingsEditContainer,
+} from './account-settings-edit-container'
 export { default as CreateRoomContainer } from './create-room-container'
 export { default as LoginContainer } from './login-container'
 export { default as RegistrationContainer } from './registration-container'

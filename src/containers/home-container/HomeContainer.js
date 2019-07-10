@@ -1,39 +1,21 @@
 import React, { useEffect } from 'react'
 import { isEmpty } from 'lodash'
 import { Query } from 'react-apollo'
-import { gql } from 'apollo-boost'
 import { Home, Layout } from '../../components'
+import { GET_USER_QUERY, GET_USER_SUBSCRIPTION } from './gql'
 
 import { usePrevious } from '../../hooks'
 import navigationService from '../../services/navigationService'
 
 import * as Routes from '../../utils/routeNames'
 
-import * as S from './HomeContainer.styled'
-
-const GET_USER_QUERY = gql`
-	{
-		user {
-			name
-			room {
-				_id
-				sessionStarted
-				name
-				party {
-					_id
-					name
-					email
-				}
-			}
-		}
-	}
-`
-
 const HomeContainer = (props) => {
 	const {
 		queryData: { user },
 		navigation,
+		subscribeToMore,
 	} = props
+
 	const prevUser = usePrevious(user)
 
 	useEffect(() => {
@@ -47,34 +29,49 @@ const HomeContainer = (props) => {
 				})
 			}
 		}
+
+		subscribeToMore({
+			document: GET_USER_SUBSCRIPTION,
+			updateQuery: (prev, { subscriptionData }) => {
+				if (!subscriptionData.data) return prev
+
+				const userData = subscriptionData.data.userUpdated
+
+				return Object.assign({}, prev, {
+					user: {
+						...userData,
+					},
+				})
+			},
+		})
 	}, [user])
 
 	return (
 		<Layout isAuthenticated>
-			<>
-				{isEmpty(user.room) && (
-					<Home
-						onCreateRoom={() => {
-							navigationService.navigate({
-								routeName: Routes.CREATE_ROOM_ROUTE,
-							})
-						}}
-						onJoinRoom={() => {}}
-					/>
-				)}
-			</>
+			{user && user.room && (
+				<Home
+					onCreateRoom={() => {
+						navigationService.navigate({
+							routeName: Routes.CREATE_ROOM_ROUTE,
+						})
+					}}
+					onJoinRoom={() => {}}
+				/>
+			)}
 		</Layout>
 	)
 }
 
 const HomeContainerWithQuery = (props) => (
 	<Query query={GET_USER_QUERY}>
-		{({ loading, data }) => {
-			if (loading) {
-				return <S.LoadingText>Loading...</S.LoadingText>
-			}
-			return <HomeContainer queryData={data} isLoading={loading} {...props} />
-		}}
+		{({ loading, data, subscribeToMore }) => (
+			<HomeContainer
+				queryData={data}
+				isLoading={loading}
+				subscribeToMore={subscribeToMore}
+				{...props}
+			/>
+		)}
 	</Query>
 )
 
