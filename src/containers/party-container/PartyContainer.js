@@ -1,40 +1,35 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Query } from 'react-apollo'
-import { gql } from 'apollo-boost'
-import { isEmpty } from 'lodash'
 import { Layout, PartyList } from '../../components'
-
-const GET_USER = gql`
-	{
-		user {
-			room {
-				roomOwner {
-					name
-				}
-				sessionStarted
-				name
-				_id
-				party {
-					name
-					email
-					_id
-				}
-			}
-		}
-	}
-`
+import { GET_USER, GET_USER_SUBSCRIPTION } from './gql'
 
 const PartyContainer = (props) => {
-	const { isLoading, queryData, refetch } = props
+	const { isLoading, queryData, refetch, subscribeToMore } = props
+
+	useEffect(() => {
+		subscribeToMore({
+			document: GET_USER_SUBSCRIPTION,
+			updateQuery: (prev, { subscriptionData }) => {
+				if (!subscriptionData.data) return prev
+				const userData = subscriptionData.data.userUpdated
+
+				return Object.assign({}, prev, {
+					user: {
+						...userData,
+					},
+				})
+			},
+		})
+	}, [])
 
 	return (
 		<Layout isAuthenticated={true} isLoading={isLoading}>
-			{!isEmpty(queryData) && (
+			{queryData && queryData.user && (
 				<PartyList
 					party={queryData.user.room.party}
 					roomName={queryData.user.room.name}
-					refetch={refetch}
 					isLoading={isLoading}
+					refetch={refetch}
 				/>
 			)}
 		</Layout>
@@ -42,13 +37,14 @@ const PartyContainer = (props) => {
 }
 
 const PartyContainerWithQuery = (props) => (
-	<Query query={GET_USER} fetchPolicy="network-only">
-		{({ loading, data, refetch }) => (
+	<Query query={GET_USER}>
+		{({ loading, data, refetch, subscribeToMore }) => (
 			<PartyContainer
 				queryData={data}
 				isLoading={loading}
-				{...props}
 				refetch={refetch}
+				subscribeToMore={subscribeToMore}
+				{...props}
 			/>
 		)}
 	</Query>

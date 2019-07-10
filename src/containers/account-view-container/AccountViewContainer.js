@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { Query } from 'react-apollo'
-import { gql } from 'apollo-boost'
+import gql from 'graphql-tag'
 import { isEmpty } from 'lodash'
 
 import { AccountView, Layout } from '../../components'
@@ -11,11 +11,22 @@ import navigationService from '../../services/navigationService'
 import { resetCache } from '../../graphql/client'
 import * as Routes from '../../utils/routeNames'
 
-import { usePrevious } from '../../hooks'
-
-const GET_USER_QUERY_CACHE = gql`
+const GET_USER_QUERY = gql`
 	{
-		user @client {
+		user {
+			name
+			room {
+				_id
+				sessionStarted
+				name
+			}
+		}
+	}
+`
+
+const GET_USER_SUBSCRIPTION = gql`
+	subscription {
+		userUpdated {
 			name
 			room {
 				_id
@@ -27,16 +38,24 @@ const GET_USER_QUERY_CACHE = gql`
 `
 
 const AccountViewContainer = (props) => {
-	const { queryData } = props
-
-	const [name, setName] = useState('')
-	const prevQueryData = usePrevious(queryData)
+	const { queryData, subscribeToMore, isLoading } = props
 
 	useEffect(() => {
-		if (isEmpty(prevQueryData) && !isEmpty(queryData)) {
-			setName(queryData.user.name)
-		}
-	}, [queryData])
+		subscribeToMore({
+			document: GET_USER_SUBSCRIPTION,
+			updateQuery: (prev, { subscriptionData }) => {
+				if (!subscriptionData.data) return prev
+
+				const userData = subscriptionData.data.userUpdated
+
+				return Object.assign({}, prev, {
+					user: {
+						...userData,
+					},
+				})
+			},
+		})
+	}, [])
 
 	const logout = async () => {
 		await AuthService.deauthenticate()
@@ -47,24 +66,31 @@ const AccountViewContainer = (props) => {
 	}
 
 	return (
-		<Layout isAuthenticated={true}>
-			<AccountView
-				logout={logout}
-				name={name}
-				navigateToAccountSettingsEdit={() =>
-					navigationService.navigate({
-						routeName: Routes.ACCOUNT_SETTINGS_EDIT_ROUTE,
-					})
-				}
-			/>
+		<Layout isAuthenticated={true} isLoading={isLoading}>
+			{!isEmpty(queryData) && (
+				<AccountView
+					logout={logout}
+					name={queryData.user.name}
+					navigateToAccountSettingsEdit={() =>
+						navigationService.navigate({
+							routeName: Routes.ACCOUNT_SETTINGS_EDIT_ROUTE,
+						})
+					}
+				/>
+			)}
 		</Layout>
 	)
 }
 
 const AccountViewContainerWithQuery = (props) => (
-	<Query query={GET_USER_QUERY_CACHE}>
-		{({ loading, data }) => (
-			<AccountViewContainer queryData={data} isLoading={loading} {...props} />
+	<Query query={GET_USER_QUERY} fetchPolicy="network-only">
+		{({ loading, data, subscribeToMore }) => (
+			<AccountViewContainer
+				queryData={data}
+				isLoading={loading}
+				subscribeToMore={subscribeToMore}
+				{...props}
+			/>
 		)}
 	</Query>
 )

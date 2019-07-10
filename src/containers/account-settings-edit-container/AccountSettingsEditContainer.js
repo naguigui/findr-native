@@ -1,28 +1,9 @@
 import React, { useState } from 'react'
-import { gql } from 'apollo-boost'
 import { Query, Mutation } from 'react-apollo'
-import { isEmpty } from 'lodash'
 import { Layout, AccountSettingsEdit } from '../../components'
+import { GET_USER_QUERY, UPDATE_USER_MUTATION } from './gql'
 
 import { showToast } from '../../utils/showToast'
-
-const GET_USER_QUERY = gql`
-	{
-		user {
-			name
-			email
-		}
-	}
-`
-
-const UPDATE_USER_MUTATION = gql`
-	mutation updateUser($name: String!) {
-		updateUser(input: { name: $name }) {
-			name
-			email
-		}
-	}
-`
 
 const AccountSettingsEditCounter = (props) => {
 	const {
@@ -54,7 +35,7 @@ const AccountSettingsEditCounter = (props) => {
 
 	return (
 		<Layout isAuthenticated isLoading={queryIsLoading || mutationIsLoading}>
-			{!queryIsLoading && !isEmpty(queryData) && (
+			{queryData && queryData.user && (
 				<AccountSettingsEdit
 					nameValue={formValues.name}
 					emailValue={formValues.email}
