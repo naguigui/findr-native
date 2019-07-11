@@ -1,20 +1,11 @@
 import React, { useState } from 'react'
 import { Mutation } from 'react-apollo'
-import gql from 'graphql-tag'
 import { Layout, JoinParty } from '../../components'
 
 import * as Routes from '../../utils/routeNames'
 
 import navigationService from '../../services/navigationService'
-
-const JOIN_PARTY_MUTATION = gql`
-	mutation joinRoom($pin: String!) {
-		joinRoom(input: { pin: $pin }) {
-			userIds
-			name
-		}
-	}
-`
+import { JOIN_PARTY_MUTATION } from './gql'
 
 const JoinPartyContainer = (props) => {
 	const [pin, setPin] = useState('')
