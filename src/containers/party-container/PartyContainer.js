@@ -24,7 +24,7 @@ const PartyContainer = (props) => {
 
 	return (
 		<Layout isAuthenticated={true} isLoading={isLoading}>
-			{queryData && queryData.user && (
+			{queryData && queryData.user && queryData.user.room && (
 				<PartyList
 					party={queryData.user.room.party}
 					roomName={queryData.user.room.name}
@@ -37,7 +37,7 @@ const PartyContainer = (props) => {
 }
 
 const PartyContainerWithQuery = (props) => (
-	<Query query={GET_USER}>
+	<Query query={GET_USER} fetchPolicy="network-only">
 		{({ loading, data, refetch, subscribeToMore }) => (
 			<PartyContainer
 				queryData={data}

@@ -7,10 +7,10 @@ const Home = (props) => {
 	const { onCreateRoom, onJoinRoom, hasSession } = props
 	return (
 		<S.HomeWrapper>
-			{!hasSession && <S.Title>Get started by selecting</S.Title>}
+			{!hasSession && <S.Title>Get started by</S.Title>}
 			<S.ButtonWrapper>
 				<Button
-					btnText="Create a room"
+					btnText="Creating a Party"
 					rounded
 					bordered
 					onPress={onCreateRoom}
@@ -19,7 +19,7 @@ const Home = (props) => {
 			</S.ButtonWrapper>
 			<S.ButtonWrapper>
 				<Button
-					btnText="Join a room"
+					btnText="Joining a Party"
 					rounded
 					bordered
 					onPress={onJoinRoom}

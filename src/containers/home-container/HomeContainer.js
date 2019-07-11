@@ -48,14 +48,18 @@ const HomeContainer = (props) => {
 
 	return (
 		<Layout isAuthenticated>
-			{user && user.room && (
+			{user && (
 				<Home
 					onCreateRoom={() => {
 						navigationService.navigate({
 							routeName: Routes.CREATE_ROOM_ROUTE,
 						})
 					}}
-					onJoinRoom={() => {}}
+					onJoinRoom={() => {
+						navigationService.navigate({
+							routeName: Routes.JOIN_PARTY_ROUTE,
+						})
+					}}
 				/>
 			)}
 		</Layout>

@@ -14,6 +14,7 @@ import {
 	AccountSettingsEditContainer,
 	HomeContainer,
 	PartyContainer,
+	JoinPartyContainer,
 } from '../containers'
 
 import { Welcome, CustomHeader } from '../components'
@@ -70,6 +71,13 @@ const HomeStack = createStackNavigator(
 			screen: PartyContainer,
 			navigationOptions: () => ({
 				title: 'Your Party',
+				headerLeft: null,
+			}),
+		},
+		[Routes.JOIN_PARTY_ROUTE]: {
+			screen: JoinPartyContainer,
+			navigationOptions: () => ({
+				title: 'Join the fun',
 			}),
 		},
 	},

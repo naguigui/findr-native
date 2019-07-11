@@ -12,22 +12,26 @@ import { getHeader } from '../services/apiHelpers'
 
 const authLink = setContext((_, { headers }) => {
 	const header = getHeader()
-	return {
-		headers: {
-			...headers,
-			...header,
-		},
+	if (header) {
+		return {
+			headers: {
+				...headers,
+				...header,
+			},
+		}
 	}
+	return null
 })
 
 const wsLink = new WebSocketLink({
 	uri: `ws://localhost:3000/graphql`,
 	options: {
 		reconnect: true,
+		keepAlive: true,
 		connectionParams: async () => {
-			const authorization = await SecureStore.getItemAsync('titan_access_token')
+			const authToken = await SecureStore.getItemAsync('titan_access_token')
 			return {
-				authorization,
+				authorization: authToken,
 			}
 		},
 	},

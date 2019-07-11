@@ -2,7 +2,10 @@ import AuthService from './authService'
 
 export const getHeader = () => {
 	const accessToken = AuthService.getAccessToken()
-	return {
-		authorization: accessToken,
+	if (accessToken) {
+		return {
+			authorization: accessToken,
+		}
 	}
+	return null
 }

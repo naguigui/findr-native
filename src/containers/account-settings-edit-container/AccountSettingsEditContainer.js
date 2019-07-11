@@ -4,6 +4,7 @@ import { Layout, AccountSettingsEdit } from '../../components'
 import { GET_USER_QUERY, UPDATE_USER_MUTATION } from './gql'
 
 import { showToast } from '../../utils/showToast'
+import { showAlertDialog } from '../../utils/showAlertDialog'
 
 const AccountSettingsEditCounter = (props) => {
 	const {
@@ -19,10 +20,15 @@ const AccountSettingsEditCounter = (props) => {
 	})
 
 	const updateUser = () => {
-		updateUserMutation({
-			variables: {
-				name: formValues.name,
-			},
+		showAlertDialog({
+			alertTitle: 'Update account settings',
+			alertMessage: 'Are you sure about these changes?',
+			onApprove: () =>
+				updateUserMutation({
+					variables: {
+						name: formValues.name,
+					},
+				}),
 		})
 	}
 
