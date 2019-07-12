@@ -4,10 +4,11 @@ import { Mutation } from 'react-apollo'
 import Layout from '../../components/layout'
 import Registration from '../../components/registration'
 
-import { REGISTRATION_MUTATION } from '../../graphql/mutations/authMutations'
 import navigationService from '../../services/navigationService'
 
 import { LOGIN_ROUTE } from '../../utils/routeNames'
+
+import { REGISTRATION_MUTATION } from './gql'
 
 const navigateToLogin = () => {
 	navigationService.navigate({
@@ -56,15 +57,15 @@ const RegistrationContainer = (props) => {
 }
 
 const RegistrationContainerWithMutation = (props) => (
-		<Mutation mutation={REGISTRATION_MUTATION} onCompleted={navigateToLogin}>
-			{(registrationAction, { loading }) => (
-					<RegistrationContainer
-						registrationAction={registrationAction}
-						isLoading={loading}
-						{...props}
-					/>
-				)}
-		</Mutation>
-	)
+	<Mutation mutation={REGISTRATION_MUTATION} onCompleted={navigateToLogin}>
+		{(registrationAction, { loading }) => (
+			<RegistrationContainer
+				registrationAction={registrationAction}
+				isLoading={loading}
+				{...props}
+			/>
+		)}
+	</Mutation>
+)
 
 export default RegistrationContainerWithMutation

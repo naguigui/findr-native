@@ -52,33 +52,21 @@ const HomeStack = createStackNavigator(
 	{
 		[Routes.HOME_ROUTE]: {
 			screen: HomeContainer,
-			navigationOptions: ({ navigation }) => ({
-				header: (
-					<CustomHeader
-						title="Welcome"
-						subtitle={navigation.getParam('subtitle')}
-					/>
-				),
+			navigationOptions: () => ({
+				header: null,
 			}),
 		},
 		[Routes.CREATE_ROOM_ROUTE]: {
 			screen: CreateRoomContainer,
-			navigationOptions: () => ({
-				title: 'Create Room',
-			}),
 		},
 		[Routes.PARTY_ROUTE]: {
 			screen: PartyContainer,
 			navigationOptions: () => ({
-				title: 'Your Party',
-				headerLeft: null,
+				header: null,
 			}),
 		},
 		[Routes.JOIN_PARTY_ROUTE]: {
 			screen: JoinPartyContainer,
-			navigationOptions: () => ({
-				title: 'Join the fun',
-			}),
 		},
 	},
 	{
@@ -126,7 +114,7 @@ const TabNavigator = createBottomTabNavigator(
 					<Ionicons
 						name={iconName}
 						size={32}
-						color={focused ? Colors.CLOUD_BURST : Colors.GREY}
+						color={focused ? Colors.MAIN_BLUE : Colors.GREY}
 					/>
 				)
 			}

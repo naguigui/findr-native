@@ -30,6 +30,7 @@ const PartyContainer = (props) => {
 					roomName={queryData.user.room.name}
 					isLoading={isLoading}
 					refetch={refetch}
+					roomOwner={queryData.user.room.roomOwner}
 				/>
 			)}
 		</Layout>

@@ -39,6 +39,8 @@ const AccountSettingsEditCounter = (props) => {
 		})
 	}
 
+	console.log(queryData)
+
 	return (
 		<Layout isAuthenticated isLoading={queryIsLoading || mutationIsLoading}>
 			{queryData && queryData.user && (
