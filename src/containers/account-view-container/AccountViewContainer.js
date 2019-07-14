@@ -83,7 +83,7 @@ const AccountViewContainer = (props) => {
 }
 
 const AccountViewContainerWithQuery = (props) => (
-	<Query query={GET_USER_QUERY} fetchPolicy="network-only">
+	<Query query={GET_USER_QUERY}>
 		{({ loading, data, subscribeToMore }) => (
 			<AccountViewContainer
 				queryData={data}

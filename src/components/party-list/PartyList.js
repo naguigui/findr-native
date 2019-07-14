@@ -6,11 +6,12 @@ import ListItem from '../list-item'
 import * as S from './PartyList.styled.js'
 
 const PartyList = (props) => {
-	const { party, roomName, refetch, isLoading } = props
+	const { party, roomName, refetch, isLoading, roomOwner } = props
 
-	const renderUserInParty = ({ item }) => (
-		<ListItem key={item._id} label={item.name} subtitle={item.email} />
-	)
+	const renderUserInParty = ({ item }) => {
+		const subtitle = roomOwner._id === item._id ? 'Room Owner' : null
+		return <ListItem key={item._id} label={item.name} subtitle={subtitle} />
+	}
 
 	const keyExtractor = (item) => item._id
 

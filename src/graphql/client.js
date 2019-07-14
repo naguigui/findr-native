@@ -1,3 +1,4 @@
+import * as SecureStore from 'expo-secure-store'
 import { ApolloClient } from 'apollo-client'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import { setContext } from 'apollo-link-context'
@@ -5,36 +6,39 @@ import { split } from 'apollo-link'
 import { HttpLink } from 'apollo-link-http'
 import { WebSocketLink } from 'apollo-link-ws'
 import { getMainDefinition } from 'apollo-utilities'
-
-import * as SecureStore from 'expo-secure-store'
+import config from '../../config'
 
 import { getHeader } from '../services/apiHelpers'
 
 const authLink = setContext((_, { headers }) => {
 	const header = getHeader()
-	return {
-		headers: {
-			...headers,
-			...header,
-		},
+	if (header) {
+		return {
+			headers: {
+				...headers,
+				...header,
+			},
+		}
 	}
+	return null
 })
 
 const wsLink = new WebSocketLink({
-	uri: `ws://localhost:3000/graphql`,
+	uri: `${config.BASE_WS_API_URL}/graphql`,
 	options: {
 		reconnect: true,
+		keepAlive: true,
 		connectionParams: async () => {
-			const authorization = await SecureStore.getItemAsync('titan_access_token')
+			const authToken = await SecureStore.getItemAsync('titan_access_token')
 			return {
-				authorization,
+				authorization: authToken,
 			}
 		},
 	},
 })
 
 const httpLink = new HttpLink({
-	uri: 'http://localhost:3000/graphql',
+	uri: `${config.BASE_API_URL}/graphql`,
 })
 
 const link = split(

@@ -14,6 +14,7 @@ const HomeContainer = (props) => {
 		queryData: { user },
 		navigation,
 		subscribeToMore,
+		isLoading,
 	} = props
 
 	const prevUser = usePrevious(user)
@@ -47,15 +48,20 @@ const HomeContainer = (props) => {
 	}, [user])
 
 	return (
-		<Layout isAuthenticated>
-			{user && user.room && (
+		<Layout isAuthenticated isLoading={isLoading}>
+			{user && (
 				<Home
+					name={user.name}
 					onCreateRoom={() => {
 						navigationService.navigate({
 							routeName: Routes.CREATE_ROOM_ROUTE,
 						})
 					}}
-					onJoinRoom={() => {}}
+					onJoinRoom={() => {
+						navigationService.navigate({
+							routeName: Routes.JOIN_PARTY_ROUTE,
+						})
+					}}
 				/>
 			)}
 		</Layout>

@@ -4,13 +4,13 @@ import { Mutation } from 'react-apollo'
 import Layout from '../../components/layout'
 import Login from '../../components/login'
 
-import { LOGIN_MUTATION } from '../../graphql/mutations/authMutations'
-
 import navigationService from '../../services/navigationService'
 import AuthService from '../../services/authService'
 
 import { apolloErrorStrip } from '../../utils/graphQLErrorHelpers'
 import { showToast } from '../../utils/showToast'
+
+import { LOGIN_MUTATION } from './gql'
 
 const LoginContainer = (props) => {
 	const { loginAction, isLoading } = props
@@ -59,24 +59,24 @@ const LoginContainer = (props) => {
 }
 
 const LoginContainerWithMutation = (props) => (
-		<Mutation
-			mutation={LOGIN_MUTATION}
-			onCompleted={async (data) => {
-				const { accessToken } = data.login
-				await AuthService.authenticate(accessToken)
-				navigationService.navigate({
-					routeName: 'App',
-				})
-			}}
-		>
-			{(loginAction, { loading }) => (
-					<LoginContainer
-						loginAction={loginAction}
-						isLoading={loading}
-						{...props}
-					/>
-				)}
-		</Mutation>
-	)
+	<Mutation
+		mutation={LOGIN_MUTATION}
+		onCompleted={async (data) => {
+			const { accessToken } = data.login
+			await AuthService.authenticate(accessToken)
+			navigationService.navigate({
+				routeName: 'App',
+			})
+		}}
+	>
+		{(loginAction, { loading }) => (
+			<LoginContainer
+				loginAction={loginAction}
+				isLoading={loading}
+				{...props}
+			/>
+		)}
+	</Mutation>
+)
 
 export default LoginContainerWithMutation
