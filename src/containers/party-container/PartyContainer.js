@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Query, Mutation } from 'react-apollo'
 import { Layout, PartyList } from '../../components'
-import { GET_USER, GET_USER_SUBSCRIPTION, UPDATE_USER_MUTATION } from './gql'
+import { GET_USER, UPDATE_USER_MUTATION } from './gql'
 
 const PartyContainer = (props) => {
 	const {
@@ -9,32 +9,16 @@ const PartyContainer = (props) => {
 		queryIsLoading,
 		mutationIsLoading,
 		queryData,
-		subscribeToMore,
 	} = props
 
 	const isLoading = queryIsLoading || mutationIsLoading
-
-	useEffect(() => {
-		subscribeToMore({
-			document: GET_USER_SUBSCRIPTION,
-			updateQuery: (prev, { subscriptionData }) => {
-				if (!subscriptionData.data) return prev
-				const userData = subscriptionData.data.userUpdated
-
-				return Object.assign({}, prev, {
-					user: {
-						...userData,
-					},
-				})
-			},
-		})
-	}, [])
 
 	const onReady = () => {
 		updateUserMutation({
 			variables: {
 				isReady: !queryData.user.isReady,
 			},
+			refetchQueries: [{ query: GET_USER }],
 		})
 	}
 
