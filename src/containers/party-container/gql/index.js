@@ -6,13 +6,10 @@ export const GET_USER = gql`
 			_id
 			isReady
 			room {
-				roomOwner {
-					_id
-					name
-				}
 				sessionStarted
 				name
 				_id
+				pin
 				party {
 					name
 					email
@@ -30,13 +27,10 @@ export const GET_USER_SUBSCRIPTION = gql`
 			_id
 			isReady
 			room {
-				roomOwner {
-					_id
-					name
-				}
 				sessionStarted
 				name
 				_id
+				pin
 				party {
 					name
 					email
@@ -51,6 +45,7 @@ export const GET_USER_SUBSCRIPTION = gql`
 export const UPDATE_USER_MUTATION = gql`
 	mutation updateUser($isReady: Boolean!) {
 		updateUser(input: { isReady: $isReady }) {
+			_id
 			isReady
 		}
 	}

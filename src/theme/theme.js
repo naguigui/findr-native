@@ -6,6 +6,7 @@ const theme = {
 		white: Colors.WHITE,
 		cloud_burst: Colors.CLOUD_BURST,
 		grey: Colors.GREY,
+		red: Colors.RED,
 	},
 }
 

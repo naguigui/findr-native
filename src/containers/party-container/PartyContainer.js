@@ -43,8 +43,9 @@ const PartyContainer = (props) => {
 			{queryData && queryData.user && queryData.user.room && (
 				<PartyList
 					party={queryData.user.room.party}
+					pin={queryData.user.room.pin}
 					roomName={queryData.user.room.name}
-					roomOwner={queryData.user.room.roomOwner}
+					isReady={queryData.user.isReady}
 					onReady={onReady}
 				/>
 			)}

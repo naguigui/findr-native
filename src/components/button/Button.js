@@ -5,6 +5,7 @@ import * as S from './Button.styled'
 
 const Button = (props) => {
 	const { btnText, onPress, isSecondary } = props
+
 	return (
 		<NativeBaseButton
 			full
