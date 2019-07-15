@@ -58,14 +58,7 @@ const AccountSettingsEditCounter = (props) => {
 const AccountSettingsEditCounterWithQuery = (props) => (
 	<Query query={GET_USER_QUERY}>
 		{({ loading: queryLoading, data: queryData }) => (
-			<Mutation
-				mutation={UPDATE_USER_MUTATION}
-				onCompleted={() => {
-					showToast({
-						message: 'Account successfully updated.',
-					})
-				}}
-			>
+			<Mutation mutation={UPDATE_USER_MUTATION}>
 				{(updateUserMutation, { loading: mutationLoading }) => (
 					<AccountSettingsEditCounter
 						queryData={queryData}

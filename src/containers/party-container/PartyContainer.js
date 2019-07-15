@@ -1,10 +1,18 @@
 import React, { useEffect } from 'react'
-import { Query } from 'react-apollo'
+import { Query, Mutation } from 'react-apollo'
 import { Layout, PartyList } from '../../components'
-import { GET_USER, GET_USER_SUBSCRIPTION } from './gql'
+import { GET_USER, GET_USER_SUBSCRIPTION, UPDATE_USER_MUTATION } from './gql'
 
 const PartyContainer = (props) => {
-	const { isLoading, queryData, refetch, subscribeToMore } = props
+	const {
+		updateUserMutation,
+		queryIsLoading,
+		mutationIsLoading,
+		queryData,
+		subscribeToMore,
+	} = props
+
+	const isLoading = queryIsLoading || mutationIsLoading
 
 	useEffect(() => {
 		subscribeToMore({
@@ -22,15 +30,23 @@ const PartyContainer = (props) => {
 		})
 	}, [])
 
+	const onReady = () => {
+		updateUserMutation({
+			variables: {
+				isReady: !queryData.user.isReady,
+			},
+		})
+	}
+
 	return (
 		<Layout isAuthenticated={true} isLoading={isLoading}>
 			{queryData && queryData.user && queryData.user.room && (
 				<PartyList
 					party={queryData.user.room.party}
+					pin={queryData.user.room.pin}
 					roomName={queryData.user.room.name}
-					isLoading={isLoading}
-					refetch={refetch}
-					roomOwner={queryData.user.room.roomOwner}
+					isReady={queryData.user.isReady}
+					onReady={onReady}
 				/>
 			)}
 		</Layout>
@@ -39,14 +55,19 @@ const PartyContainer = (props) => {
 
 const PartyContainerWithQuery = (props) => (
 	<Query query={GET_USER} fetchPolicy="network-only">
-		{({ loading, data, refetch, subscribeToMore }) => (
-			<PartyContainer
-				queryData={data}
-				isLoading={loading}
-				refetch={refetch}
-				subscribeToMore={subscribeToMore}
-				{...props}
-			/>
+		{({ loading: queryLoading, data: queryData, subscribeToMore }) => (
+			<Mutation mutation={UPDATE_USER_MUTATION}>
+				{(updateUserMutation, { loading: mutationLoading }) => (
+					<PartyContainer
+						queryData={queryData}
+						queryIsLoading={queryLoading}
+						mutationIsLoading={mutationLoading}
+						subscribeToMore={subscribeToMore}
+						updateUserMutation={updateUserMutation}
+						{...props}
+					/>
+				)}
+			</Mutation>
 		)}
 	</Query>
 )
