@@ -56,6 +56,10 @@ const link = split(
 const client = new ApolloClient({
 	cache: new InMemoryCache(),
 	link: authLink.concat(link),
+	onError: ({ networkError, graphQLErrors }) => {
+		console.log('graphQLErrors', graphQLErrors)
+		console.log('networkError', networkError)
+	},
 })
 
 export const resetCache = () => {

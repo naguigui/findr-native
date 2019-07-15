@@ -6,10 +6,10 @@ import ListItem from '../list-item'
 import * as S from './PartyList.styled.js'
 
 const PartyList = (props) => {
-	const { party, roomName, refetch, isLoading, roomOwner } = props
+	const { party, roomName, onReady } = props
 
 	const renderUserInParty = ({ item }) => {
-		const subtitle = roomOwner._id === item._id ? 'Room Owner' : null
+		const subtitle = item.isReady ? 'Ready' : 'Not Ready'
 		return <ListItem key={item._id} label={item.name} subtitle={subtitle} />
 	}
 
@@ -23,12 +23,11 @@ const PartyList = (props) => {
 					data={party}
 					renderItem={renderUserInParty}
 					keyExtractor={keyExtractor}
-					onRefresh={refetch}
-					refreshing={isLoading}
+					extraData={party}
 				/>
 			</>
 			<S.ButtonWrapper>
-				<Button btnText="Ready" />
+				<Button btnText="Ready" onPress={onReady} />
 			</S.ButtonWrapper>
 		</S.PartyListWrapper>
 	)
