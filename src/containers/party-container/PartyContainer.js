@@ -1,26 +1,22 @@
 import React from 'react'
-import { Query, Mutation } from 'react-apollo'
+import { useQuery, useMutation } from 'react-apollo-hooks'
 import { Layout, PartyList } from '../../components'
 import { GET_USER, UPDATE_USER_MUTATION } from './gql'
 
-const PartyContainer = (props) => {
-	const {
-		updateUserMutation,
-		queryIsLoading,
-		mutationIsLoading,
-		queryData,
-	} = props
+const PartyContainer = () => {
+	const { data: queryData, loading: queryLoading } = useQuery(GET_USER)
 
-	const isLoading = queryIsLoading || mutationIsLoading
-
-	const onReady = () => {
-		updateUserMutation({
+	const [updateUserAction, { loading: mutationLoading }] = useMutation(
+		UPDATE_USER_MUTATION,
+		{
 			variables: {
-				isReady: !queryData.user.isReady,
+				isReady: queryData && !queryData.user.isReady,
 			},
 			refetchQueries: [{ query: GET_USER }],
-		})
-	}
+		},
+	)
+
+	const isLoading = queryLoading || mutationLoading
 
 	return (
 		<Layout isAuthenticated={true} isLoading={isLoading}>
@@ -30,30 +26,11 @@ const PartyContainer = (props) => {
 					pin={queryData.user.room.pin}
 					roomName={queryData.user.room.name}
 					isReady={queryData.user.isReady}
-					onReady={onReady}
+					onReady={updateUserAction}
 				/>
 			)}
 		</Layout>
 	)
 }
 
-const PartyContainerWithQuery = (props) => (
-	<Query query={GET_USER} fetchPolicy="network-only">
-		{({ loading: queryLoading, data: queryData, subscribeToMore }) => (
-			<Mutation mutation={UPDATE_USER_MUTATION}>
-				{(updateUserMutation, { loading: mutationLoading }) => (
-					<PartyContainer
-						queryData={queryData}
-						queryIsLoading={queryLoading}
-						mutationIsLoading={mutationLoading}
-						subscribeToMore={subscribeToMore}
-						updateUserMutation={updateUserMutation}
-						{...props}
-					/>
-				)}
-			</Mutation>
-		)}
-	</Query>
-)
-
-export default PartyContainerWithQuery
+export default PartyContainer

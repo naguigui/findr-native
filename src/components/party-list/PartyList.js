@@ -1,5 +1,5 @@
 import React from 'react'
-import { FlatList, Clipboard } from 'react-native'
+import { FlatList } from 'react-native'
 import Button from '../button'
 import * as Colors from '../../theme/colors'
 import ListItemWithIcon from '../list-item-with-icon'

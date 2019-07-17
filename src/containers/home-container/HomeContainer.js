@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
 import { isEmpty } from 'lodash'
-import { Query } from 'react-apollo'
+import { useQuery } from 'react-apollo-hooks'
 import { Home, Layout } from '../../components'
-import { GET_USER_QUERY, GET_USER_SUBSCRIPTION } from './gql'
+import { GET_USER_QUERY } from './gql'
 
 import { usePrevious } from '../../hooks'
 import navigationService from '../../services/navigationService'
@@ -10,48 +10,29 @@ import navigationService from '../../services/navigationService'
 import * as Routes from '../../utils/routeNames'
 
 const HomeContainer = (props) => {
-	const {
-		queryData: { user },
-		navigation,
-		subscribeToMore,
-		isLoading,
-	} = props
+	const { navigation } = props
+	const { data, loading } = useQuery(GET_USER_QUERY)
 
-	const prevUser = usePrevious(user)
+	const prevUser = usePrevious(data)
 
 	useEffect(() => {
-		if (isEmpty(prevUser) && !isEmpty(user)) {
+		if (isEmpty(prevUser) && !isEmpty(data)) {
 			navigation.setParams({
-				subtitle: user.name,
+				subtitle: data.user.name,
 			})
-			if (!isEmpty(user.room)) {
+			if (!isEmpty(data.user.room)) {
 				navigationService.replace({
 					routeName: Routes.PARTY_ROUTE,
 				})
 			}
 		}
-
-		subscribeToMore({
-			document: GET_USER_SUBSCRIPTION,
-			updateQuery: (prev, { subscriptionData }) => {
-				if (!subscriptionData.data) return prev
-
-				const userData = subscriptionData.data.userUpdated
-
-				return Object.assign({}, prev, {
-					user: {
-						...userData,
-					},
-				})
-			},
-		})
-	}, [user])
+	}, [data])
 
 	return (
-		<Layout isAuthenticated isLoading={isLoading}>
-			{user && (
+		<Layout isAuthenticated isLoading={loading}>
+			{data && data.user && (
 				<Home
-					name={user.name}
+					name={data.user.name}
 					onCreateRoom={() => {
 						navigationService.navigate({
 							routeName: Routes.CREATE_ROOM_ROUTE,
@@ -68,17 +49,4 @@ const HomeContainer = (props) => {
 	)
 }
 
-const HomeContainerWithQuery = (props) => (
-	<Query query={GET_USER_QUERY}>
-		{({ loading, data, subscribeToMore }) => (
-			<HomeContainer
-				queryData={data}
-				isLoading={loading}
-				subscribeToMore={subscribeToMore}
-				{...props}
-			/>
-		)}
-	</Query>
-)
-
-export default HomeContainerWithQuery
+export default HomeContainer
