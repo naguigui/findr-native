@@ -1,5 +1,5 @@
 {
-	"main": "node_modules/expo/AppEntry.js",
+	"main": "index.js",
 	"scripts": {
 		"start:dev": "better-npm-run development",
 		"start:prod": "better-npm-run production",
@@ -10,7 +10,19 @@
 		"format": "prettier --write \"**/*.{js,json,md,yaml,yml}\"",
 		"lint": "eslint src",
 		"generate": "plop",
-		"eject": "expo eject"
+		"eject": "expo eject",
+		"storybook:server": "storybook start -p 7007 -c .storybook/local",
+		"storybook:start": "better-npm-run storybook:start"
+	},
+	"config": {
+		"react-native-storybook-loader": {
+			"searchDir": [
+				"./src/components",
+				"./packages"
+			],
+			"pattern": "**/*.stories.js",
+			"outputFile": "./storybook/storyLoader.js"
+		}
 	},
 	"betterScripts": {
 		"development": {
@@ -24,6 +36,12 @@
 			"env": {
 				"REACT_NATIVE_ENVIRONMENT": "production"
 			}
+		},
+		"storybook:start": {
+			"command": "rnstl && expo start",
+			"env": {
+				"REACT_NATIVE_ENVIRONMENT": "storybook"
+			}
 		}
 	},
 	"dependencies": {
@@ -35,12 +53,15 @@
 		"apollo-link-error": "^1.1.11",
 		"apollo-link-http": "^1.5.15",
 		"apollo-link-ws": "^1.0.18",
+		"babel-cli": "^6.26.0",
+		"babel-eslint": "^8.0.2",
+		"babel-loader": "^7.0.0",
 		"better-npm-run": "^0.1.1",
 		"expo": "^33.0.0",
 		"graphql": "^14.4.1",
 		"graphql-tag": "^2.10.1",
 		"lodash": "^4.17.11",
-		"native-base": "^2.12.1",
+		"native-base": "2.12.1",
 		"react": "16.8.3",
 		"react-apollo": "^2.5.8",
 		"react-apollo-hooks": "^0.5.0",
@@ -53,8 +74,25 @@
 		"subscriptions-transport-ws": "^0.9.16"
 	},
 	"devDependencies": {
+		"@babel/core": "^7.2.2",
+		"@babel/plugin-proposal-class-properties": "^7.3.0",
+		"@babel/plugin-proposal-export-default-from": "^7.2.0",
+		"@babel/plugin-syntax-dynamic-import": "^7.2.0",
+		"@babel/plugin-transform-flow-strip-types": "^7.2.3",
+		"@babel/plugin-transform-runtime": "^7.2.0",
+		"@storybook/addon-actions": "^4.1.6",
+		"@storybook/addon-links": "^4.1.6",
+		"@storybook/addon-notes": "^4.1.6",
+		"@storybook/addon-ondevice-knobs": "^4.1.6",
+		"@storybook/addon-ondevice-notes": "^4.1.6",
+		"@storybook/addons": "^4.1.6",
+		"@storybook/react-native": "^4.1.11",
+		"babel-core": "^7.0.0-bridge.0",
 		"babel-eslint": "^8.0.2",
+		"babel-jest": "^23.2.0",
+		"babel-plugin-jest-hoist": "^23.2.0",
 		"babel-preset-expo": "^5.1.1",
+		"concurrently": "^4.1.1",
 		"eslint": "^4.19.1",
 		"eslint-config-airbnb": "^15.1.0",
 		"eslint-config-prettier": "^2.9.0",
@@ -68,7 +106,9 @@
 		"eslint-plugin-react": "^7.3.0",
 		"eslint-plugin-standard": "^3.0.1",
 		"plop": "^2.0.0",
-		"prettier": "^1.18.2"
+		"prettier": "^1.18.2",
+		"prop-types": "^15.7.2",
+		"react-native-storybook-loader": "^1.8.0"
 	},
 	"private": true
 }
