@@ -1,5 +1,6 @@
 import React from 'react'
 import { ApolloProvider } from 'react-apollo'
+import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks'
 import { ThemeProvider } from 'styled-components/native'
 import { Root } from 'native-base'
 
@@ -15,11 +16,13 @@ console.disableYellowBox = true
 export default function App() {
 	return (
 		<ApolloProvider client={client}>
-			<ThemeProvider theme={theme}>
-				<Root>
-					<AppContainer />
-				</Root>
-			</ThemeProvider>
+			<ApolloHooksProvider client={client}>
+				<ThemeProvider theme={theme}>
+					<Root>
+						<AppContainer />
+					</Root>
+				</ThemeProvider>
+			</ApolloHooksProvider>
 		</ApolloProvider>
 	)
 }

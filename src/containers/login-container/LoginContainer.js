@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Mutation } from 'react-apollo'
+import { useMutation } from 'react-apollo-hooks'
 
 import Layout from '../../components/layout'
 import Login from '../../components/login'
@@ -12,11 +12,17 @@ import { showToast } from '../../utils/showToast'
 
 import { LOGIN_MUTATION } from './gql'
 
-const LoginContainer = (props) => {
-	const { loginAction, isLoading } = props
+const LoginContainer = () => {
 	const [formValues, setFormValues] = useState({
 		email: '',
 		password: '',
+	})
+
+	const [loginAction, { loading }] = useMutation(LOGIN_MUTATION, {
+		variables: {
+			email: formValues.email,
+			password: formValues.password,
+		},
 	})
 
 	const onChange = (name, value) => {
@@ -26,17 +32,22 @@ const LoginContainer = (props) => {
 		})
 	}
 
-	const onSubmit = () => {
-		loginAction({
-			variables: {
-				email: formValues.email,
-				password: formValues.password,
-			},
-		}).catch((err) => {
+	const onSubmit = async () => {
+		try {
+			const {
+				data: {
+					login: { accessToken },
+				},
+			} = await loginAction()
+			await AuthService.authenticate(accessToken)
+			navigationService.navigate({
+				routeName: 'App',
+			})
+		} catch (err) {
 			showToast({
 				message: apolloErrorStrip(err.message),
 			})
-		})
+		}
 	}
 
 	const navigateToRegistration = () => {
@@ -46,7 +57,7 @@ const LoginContainer = (props) => {
 	}
 
 	return (
-		<Layout isLoading={isLoading}>
+		<Layout isLoading={loading}>
 			<Login
 				email={formValues.email}
 				password={formValues.password}
@@ -58,25 +69,4 @@ const LoginContainer = (props) => {
 	)
 }
 
-const LoginContainerWithMutation = (props) => (
-	<Mutation
-		mutation={LOGIN_MUTATION}
-		onCompleted={async (data) => {
-			const { accessToken } = data.login
-			await AuthService.authenticate(accessToken)
-			navigationService.navigate({
-				routeName: 'App',
-			})
-		}}
-	>
-		{(loginAction, { loading }) => (
-			<LoginContainer
-				loginAction={loginAction}
-				isLoading={loading}
-				{...props}
-			/>
-		)}
-	</Mutation>
-)
-
-export default LoginContainerWithMutation
+export default LoginContainer

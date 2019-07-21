@@ -1,7 +1,5 @@
-import React, { useEffect } from 'react'
-import { Query } from 'react-apollo'
-import gql from 'graphql-tag'
-import { isEmpty } from 'lodash'
+import React from 'react'
+import { useQuery } from 'react-apollo-hooks'
 
 import { AccountView, Layout } from '../../components'
 
@@ -9,53 +7,11 @@ import AuthService from '../../services/authService'
 import navigationService from '../../services/navigationService'
 
 import { resetCache } from '../../graphql/client'
+import { GET_USER_QUERY } from './gql'
 import * as Routes from '../../utils/routeNames'
 
-const GET_USER_QUERY = gql`
-	{
-		user {
-			name
-			room {
-				_id
-				sessionStarted
-				name
-			}
-		}
-	}
-`
-
-const GET_USER_SUBSCRIPTION = gql`
-	subscription {
-		userUpdated {
-			name
-			room {
-				_id
-				sessionStarted
-				name
-			}
-		}
-	}
-`
-
-const AccountViewContainer = (props) => {
-	const { queryData, subscribeToMore, isLoading } = props
-
-	useEffect(() => {
-		subscribeToMore({
-			document: GET_USER_SUBSCRIPTION,
-			updateQuery: (prev, { subscriptionData }) => {
-				if (!subscriptionData.data) return prev
-
-				const userData = subscriptionData.data.userUpdated
-
-				return Object.assign({}, prev, {
-					user: {
-						...userData,
-					},
-				})
-			},
-		})
-	}, [])
+const AccountViewContainer = () => {
+	const { data, loading } = useQuery(GET_USER_QUERY)
 
 	const logout = async () => {
 		await AuthService.deauthenticate()
@@ -66,11 +22,11 @@ const AccountViewContainer = (props) => {
 	}
 
 	return (
-		<Layout isAuthenticated={true} isLoading={isLoading}>
-			{!isEmpty(queryData) && (
+		<Layout isAuthenticated={true} isLoading={loading}>
+			{data && data.user && (
 				<AccountView
 					logout={logout}
-					name={queryData.user.name}
+					name={data.user.name}
 					navigateToAccountSettingsEdit={() =>
 						navigationService.navigate({
 							routeName: Routes.ACCOUNT_SETTINGS_EDIT_ROUTE,
@@ -82,17 +38,4 @@ const AccountViewContainer = (props) => {
 	)
 }
 
-const AccountViewContainerWithQuery = (props) => (
-	<Query query={GET_USER_QUERY}>
-		{({ loading, data, subscribeToMore }) => (
-			<AccountViewContainer
-				queryData={data}
-				isLoading={loading}
-				subscribeToMore={subscribeToMore}
-				{...props}
-			/>
-		)}
-	</Query>
-)
-
-export default AccountViewContainerWithQuery
+export default AccountViewContainer

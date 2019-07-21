@@ -1,34 +1,47 @@
 import React, { useState } from 'react'
-import { Query, Mutation } from 'react-apollo'
+import { useMutation, useQuery } from 'react-apollo-hooks'
 import { Layout, AccountSettingsEdit } from '../../components'
 import { GET_USER_QUERY, UPDATE_USER_MUTATION } from './gql'
 
-import { showToast } from '../../utils/showToast'
 import { showAlertDialog } from '../../utils/showAlertDialog'
+import { showToast } from '../../utils/showToast'
 
-const AccountSettingsEditCounter = (props) => {
+const AccountSettingsEditContainer = () => {
 	const {
-		queryIsLoading,
-		queryData,
-		mutationIsLoading,
-		updateUserMutation,
-	} = props
+		data: { user },
+		loading: queryLoading,
+	} = useQuery(GET_USER_QUERY)
 
 	const [formValues, setFormValues] = useState({
-		name: '',
-		email: '',
+		name: (user && user.name) || '',
+		email: (user && user.email) || '',
 	})
 
-	const updateUser = () => {
-		showAlertDialog({
-			alertTitle: 'Update account settings',
-			alertMessage: 'Are you sure about these changes?',
-			onApprove: () =>
-				updateUserMutation({
-					variables: {
-						name: formValues.name,
+	const [updateUserAction, { loading: mutationLoading }] = useMutation(
+		UPDATE_USER_MUTATION,
+		{
+			variables: {
+				name: formValues.name,
+			},
+			update: (cache, response) => {
+				const data = cache.readQuery({ query: GET_USER_QUERY })
+				cache.writeQuery({
+					query: GET_USER_QUERY,
+					data: {
+						user: {
+							...data.user,
+							...response.data.updateUser,
+						},
 					},
-				}),
+				})
+			},
+		},
+	)
+
+	const updateUser = async () => {
+		await updateUserAction()
+		showToast({
+			message: 'Account successfully updated.',
 		})
 	}
 
@@ -39,38 +52,28 @@ const AccountSettingsEditCounter = (props) => {
 		})
 	}
 
+	const isLoading = mutationLoading || queryLoading
+
 	return (
-		<Layout isAuthenticated isLoading={queryIsLoading || mutationIsLoading}>
-			{queryData && queryData.user && (
+		<Layout isAuthenticated isLoading={isLoading}>
+			{user && (
 				<AccountSettingsEdit
 					nameValue={formValues.name}
 					emailValue={formValues.email}
 					onChange={onChange}
-					namePlaceholder={queryData.user.name}
-					emailPlaceholder={queryData.user.email}
-					updateUser={updateUser}
+					namePlaceholder={user.name}
+					emailPlaceholder={user.email}
+					updateUser={() =>
+						showAlertDialog({
+							alertTitle: 'Update account settings',
+							alertMessage: 'Are you sure about these changes?',
+							onApprove: updateUser,
+						})
+					}
 				/>
 			)}
 		</Layout>
 	)
 }
 
-const AccountSettingsEditCounterWithQuery = (props) => (
-	<Query query={GET_USER_QUERY}>
-		{({ loading: queryLoading, data: queryData }) => (
-			<Mutation mutation={UPDATE_USER_MUTATION}>
-				{(updateUserMutation, { loading: mutationLoading }) => (
-					<AccountSettingsEditCounter
-						queryData={queryData}
-						queryIsLoading={queryLoading}
-						mutationIsLoading={mutationLoading}
-						updateUserMutation={updateUserMutation}
-						{...props}
-					/>
-				)}
-			</Mutation>
-		)}
-	</Query>
-)
-
-export default AccountSettingsEditCounterWithQuery
+export default AccountSettingsEditContainer

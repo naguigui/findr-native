@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import gql from 'graphql-tag'
-import { Mutation } from 'react-apollo'
+import { useMutation } from 'react-apollo-hooks'
 import { Layout, CreateRoom } from '../../components'
 
 import navigationService from '../../services/navigationService'
@@ -15,10 +15,12 @@ const CREATE_ROOM_MUTATION = gql`
 	}
 `
 
-const CreateRoomContainer = (props) => {
-	const { createRoomAction, isLoading } = props
+const CreateRoomContainer = () => {
 	const [formValues, setFormValues] = useState({
 		name: '',
+	})
+	const [createRoomAction, { loading }] = useMutation(CREATE_ROOM_MUTATION, {
+		variables: { name: formValues.name },
 	})
 
 	const onChange = (name, value) => {
@@ -28,16 +30,15 @@ const CreateRoomContainer = (props) => {
 		})
 	}
 
-	const createRoom = () => {
-		createRoomAction({
-			variables: {
-				name: formValues.name,
-			},
+	const createRoom = async () => {
+		await createRoomAction()
+		navigationService.navigate({
+			routeName: Routes.PARTY_ROUTE,
 		})
 	}
 
 	return (
-		<Layout isLoading={isLoading} isAuthenticated>
+		<Layout isLoading={loading} isAuthenticated={true}>
 			<CreateRoom
 				name={formValues.name}
 				onChange={onChange}
@@ -47,24 +48,4 @@ const CreateRoomContainer = (props) => {
 	)
 }
 
-const CreateRoomContainerWithMutation = (props) => (
-	<Mutation
-		mutation={CREATE_ROOM_MUTATION}
-		onCompleted={() => {
-			navigationService.navigate({
-				routeName: Routes.PARTY_ROUTE,
-			})
-		}}
-	>
-		{(createRoomAction, { loading, data }) => (
-			<CreateRoomContainer
-				createRoomAction={createRoomAction}
-				isLoading={loading}
-				mutationData={data}
-				{...props}
-			/>
-		)}
-	</Mutation>
-)
-
-export default CreateRoomContainerWithMutation
+export default CreateRoomContainer

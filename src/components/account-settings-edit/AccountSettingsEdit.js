@@ -1,5 +1,4 @@
 import React from 'react'
-import Input from '../input'
 import Button from '../button'
 import DisplayListItem from '../display-list-item'
 
@@ -35,7 +34,7 @@ const AccountSettingsEdit = (props) => {
 				/>
 			</S.InputWrapper>
 			<S.ButtonWrapper>
-				<Button btnText="Update user" onPress={updateUser} />
+				<Button btnText="Update your settings" onPress={updateUser} />
 			</S.ButtonWrapper>
 		</S.AccountSettingsEditWrapper>
 	)
