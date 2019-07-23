@@ -19,18 +19,16 @@ const RestaurantCard = (props) => {
 				/>
 			</S.ImageWrapper>
 			<S.Content>
-				<S.LeftContent>
-					<S.NameWrapper>
-						<S.Name>{name}</S.Name>
-						<Stars
-							half={true}
-							display={rating}
-							spacing={STAR_SPACING_BETWEEN}
-							starSize={STAR_SIZE}
-						/>
-					</S.NameWrapper>
-					<S.Address>{address}</S.Address>
-				</S.LeftContent>
+				<S.NameWrapper>
+					<S.Name>{name}</S.Name>
+					<Stars
+						half={true}
+						display={rating}
+						spacing={STAR_SPACING_BETWEEN}
+						starSize={STAR_SIZE}
+					/>
+				</S.NameWrapper>
+				<S.Address>{address}</S.Address>
 			</S.Content>
 		</S.RestaurantCardWrapper>
 	)

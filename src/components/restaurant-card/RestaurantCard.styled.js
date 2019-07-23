@@ -7,6 +7,7 @@ export const RestaurantCardWrapper = styled.View`
 	border-radius: 6;
 	border-bottom-width: 1;
 	border-bottom-color: ${(props) => props.theme.colors.grey};
+	background-color: ${(props) => props.theme.colors.white};
 `
 
 export const ImageWrapper = styled.View`
@@ -28,12 +29,6 @@ export const Content = styled.View`
 	padding-left: 18;
 	padding-right: 18;
 	padding-bottom: 24;
-`
-
-export const LeftContent = styled.View`
-	display: flex;
-	flex-direction: column;
-	flex: 1;
 	justify-content: space-evenly;
 `
 
@@ -44,14 +39,14 @@ export const NameWrapper = styled.View`
 `
 
 export const Name = styled.Text`
-	font-size: 24;
+	font-size: 18;
 	font-weight: bold;
 	color: ${(props) => props.theme.colors.cloud_burst};
 	margin-right: 8;
 `
 
 export const Address = styled.Text`
-	font-size: 18;
+	font-size: 14;
 	font-weight: bold;
 	color: ${(props) => props.theme.colors.cloud_burst};
 `

@@ -6,12 +6,14 @@
 
 function loadStories() {
   require('../src/components/button/Button.stories');
+  require('../src/components/carousel/Carousel.stories');
   require('../src/components/restaurant-card/RestaurantCard.stories');
   
 }
 
 const stories = [
   '../src/components/button/Button.stories',
+  '../src/components/carousel/Carousel.stories',
   '../src/components/restaurant-card/RestaurantCard.stories',
   
 ];
