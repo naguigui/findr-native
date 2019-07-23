@@ -6,11 +6,13 @@
 
 function loadStories() {
   require('../src/components/button/Button.stories');
+  require('../src/components/restaurant-card/RestaurantCard.stories');
   
 }
 
 const stories = [
   '../src/components/button/Button.stories',
+  '../src/components/restaurant-card/RestaurantCard.stories',
   
 ];
 
