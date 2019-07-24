@@ -51,7 +51,7 @@ const MOCK_DATA = [
 	},
 ]
 
-const renderItem = ({ item }) => {
+const renderItem = (item) => {
 	const { name, rating, imageUrl, location } = item
 	const address = `${location.address}`
 	return (

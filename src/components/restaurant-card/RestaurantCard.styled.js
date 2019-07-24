@@ -4,9 +4,6 @@ export const RestaurantCardWrapper = styled.View`
 	display: flex;
 	flex-direction: column;
 	flex: 1;
-	border-radius: 6;
-	border-bottom-width: 1;
-	border-bottom-color: ${(props) => props.theme.colors.grey};
 	background-color: ${(props) => props.theme.colors.white};
 `
 
@@ -15,10 +12,12 @@ export const ImageWrapper = styled.View`
 	flex-direction: column;
 	flex: 1;
 	border-radius: 10;
+	max-height: 70%;
 `
 
 export const StyledImage = styled.Image`
-	flex: 1;
+	height: 100%;
+	width: 100%;
 `
 
 export const Content = styled.View`
@@ -30,6 +29,9 @@ export const Content = styled.View`
 	padding-right: 18;
 	padding-bottom: 24;
 	justify-content: space-evenly;
+	border-radius: 6;
+	border-bottom-width: 1;
+	border-bottom-color: ${(props) => props.theme.colors.grey};
 `
 
 export const NameWrapper = styled.View`

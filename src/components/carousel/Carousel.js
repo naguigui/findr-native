@@ -1,41 +1,23 @@
 import React from 'react'
-import RNSnapCarousel from 'react-native-snap-carousel'
-import { SCREEN_WIDTH } from '../../utils/constants'
+import Swiper from 'react-native-deck-swiper'
 
-// Gets rid of the weird scaling animation
-const INACTIVE_SLIDE_SCALE = 1
+import * as S from './Carousel.styled'
 
 const Carousel = (props) => {
-	const {
-		reference,
-		data,
-		itemWidth,
-		renderItem,
-		sliderWidth,
-		onSnapToItem,
-		removeClippedSubviews,
-	} = props
+	const { data, renderItem } = props
 	return (
-		<RNSnapCarousel
-			layout="tinder"
-			layoutCardOffset={9}
-			ref={reference}
-			data={data}
-			itemWidth={itemWidth}
-			renderItem={renderItem}
-			sliderWidth={sliderWidth}
-			inactiveSlideScale={INACTIVE_SLIDE_SCALE}
-			onSnapToItem={onSnapToItem}
-			removeClippedSubviews={removeClippedSubviews}
-		/>
+		<S.CarouselWrapper>
+			<Swiper
+				cards={data}
+				renderCard={renderItem}
+				backgroundColor="transparent"
+				cardVerticalMargin={0}
+				cardHorizontalMargin={0}
+				showSecondCard={true}
+				stackSize={2}
+			/>
+		</S.CarouselWrapper>
 	)
-}
-
-Carousel.defaultProps = {
-	itemWidth: SCREEN_WIDTH,
-	sliderWidth: SCREEN_WIDTH,
-	inactiveSlideScale: INACTIVE_SLIDE_SCALE,
-	removeClippedSubviews: false,
 }
 
 export default Carousel
