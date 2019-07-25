@@ -8,3 +8,6 @@ export { default as RegistrationContainer } from './registration-container'
 export { default as HomeContainer } from './home-container'
 export { default as PartyContainer } from './party-container'
 export { default as JoinPartyContainer } from './join-party-container'
+export {
+	default as RestaurantSelectionContainer,
+} from './restaurant-selection-container'

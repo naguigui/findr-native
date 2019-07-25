@@ -42,11 +42,11 @@ export const GET_USER_SUBSCRIPTION = gql`
 	}
 `
 
-export const UPDATE_USER_MUTATION = gql`
-	mutation updateUser($isReady: Boolean!) {
-		updateUser(input: { isReady: $isReady }) {
+export const START_SESSION_MUTATION = gql`
+	mutation startSession($roomId: String!) {
+		startSession(input: { roomId: $roomId }) {
 			_id
-			isReady
+			sessionStarted
 		}
 	}
 `

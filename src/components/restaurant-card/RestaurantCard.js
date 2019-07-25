@@ -7,7 +7,7 @@ const STAR_SIZE = 20
 const STAR_SPACING_BETWEEN = 4
 
 const RestaurantCard = (props) => {
-	const { name, address, rating, imageUrl } = props
+	const { name, location, rating, imageUrl } = props
 	return (
 		<S.RestaurantCardWrapper>
 			<S.ImageWrapper>
@@ -28,7 +28,7 @@ const RestaurantCard = (props) => {
 						starSize={STAR_SIZE}
 					/>
 				</S.NameWrapper>
-				<S.Address>{address}</S.Address>
+				<S.Location>{location}</S.Location>
 			</S.Content>
 		</S.RestaurantCardWrapper>
 	)

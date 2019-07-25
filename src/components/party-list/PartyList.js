@@ -1,27 +1,18 @@
 import React from 'react'
 import { FlatList } from 'react-native'
 import Button from '../button'
-import * as Colors from '../../theme/colors'
-import ListItemWithIcon from '../list-item-with-icon'
+import ListItem from '../list-item'
 
 import * as S from './PartyList.styled.js'
 
 const PartyList = (props) => {
-	const { party, roomName, onReady, isReady, pin } = props
+	const { party, roomName, startSession, pin } = props
 
 	const renderUserInParty = ({ item }) => (
-		<ListItemWithIcon
-			key={item._id}
-			label={item.name}
-			subtitle={item.email}
-			iconName={item.isReady ? 'ios-checkmark-circle' : 'ios-alert'}
-			iconColor={item.isReady ? Colors.MAIN_BLUE : Colors.RED}
-		/>
+		<ListItem key={item._id} label={item.name} subtitle={item.email} />
 	)
 
 	const keyExtractor = (item) => item._id
-
-	const btnText = isReady ? 'Not Ready' : 'Ready'
 
 	return (
 		<S.PartyListWrapper>
@@ -37,7 +28,7 @@ const PartyList = (props) => {
 				/>
 			</>
 			<S.ButtonWrapper>
-				<Button btnText={btnText} onPress={onReady} />
+				<Button btnText="Start" onPress={startSession} />
 			</S.ButtonWrapper>
 		</S.PartyListWrapper>
 	)

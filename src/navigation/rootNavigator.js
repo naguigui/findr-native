@@ -79,7 +79,7 @@ const AccountSettingsStack = createStackNavigator(
 		[Routes.ACCOUNT_SETTINGS_ROUTE]: {
 			screen: AccountViewContainer,
 			navigationOptions: () => ({
-				header: <CustomHeader title="Account" subtitle="Settings" />,
+				title: 'Account Settings',
 			}),
 		},
 		[Routes.ACCOUNT_SETTINGS_EDIT_ROUTE]: {

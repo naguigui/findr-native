@@ -1,0 +1,3 @@
+import RestaurantSelectionContainer from './RestaurantSelectionContainer'
+
+export default RestaurantSelectionContainer

@@ -1,16 +1,18 @@
 import React from 'react'
+import { isEmpty } from 'lodash'
 import { useQuery, useMutation } from 'react-apollo-hooks'
+import RestaurantSelectionContainer from '../restaurant-selection-container'
 import { Layout, PartyList } from '../../components'
-import { GET_USER, UPDATE_USER_MUTATION } from './gql'
+import { GET_USER, START_SESSION_MUTATION } from './gql'
 
 const PartyContainer = () => {
 	const { data: queryData, loading: queryLoading } = useQuery(GET_USER)
 
-	const [updateUserAction, { loading: mutationLoading }] = useMutation(
-		UPDATE_USER_MUTATION,
+	const [startSessionMutation, { loading: mutationLoading }] = useMutation(
+		START_SESSION_MUTATION,
 		{
 			variables: {
-				isReady: queryData && !queryData.user.isReady,
+				roomId: queryData && queryData.user.room._id,
 			},
 			refetchQueries: [{ query: GET_USER }],
 		},
@@ -20,14 +22,16 @@ const PartyContainer = () => {
 
 	return (
 		<Layout isAuthenticated={true} isLoading={isLoading}>
-			{queryData && queryData.user && queryData.user.room && (
+			{!isEmpty(queryData) && !queryData.user.room.sessionStarted && (
 				<PartyList
 					party={queryData.user.room.party}
 					pin={queryData.user.room.pin}
 					roomName={queryData.user.room.name}
-					isReady={queryData.user.isReady}
-					onReady={updateUserAction}
+					startSession={startSessionMutation}
 				/>
+			)}
+			{!isEmpty(queryData) && queryData.user.room.sessionStarted && (
+				<RestaurantSelectionContainer />
 			)}
 		</Layout>
 	)

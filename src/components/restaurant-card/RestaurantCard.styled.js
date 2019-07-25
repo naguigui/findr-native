@@ -47,7 +47,7 @@ export const Name = styled.Text`
 	margin-right: 8;
 `
 
-export const Address = styled.Text`
+export const Location = styled.Text`
 	font-size: 14;
 	font-weight: bold;
 	color: ${(props) => props.theme.colors.cloud_burst};
