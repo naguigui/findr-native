@@ -12,7 +12,7 @@ export const ImageWrapper = styled.View`
 	flex-direction: column;
 	flex: 1;
 	border-radius: 10;
-	max-height: 70%;
+	max-height: 50%;
 `
 
 export const StyledImage = styled.Image`
@@ -23,7 +23,7 @@ export const StyledImage = styled.Image`
 export const Content = styled.View`
 	display: flex;
 	flex-direction: column;
-	height: 150;
+	height: 15%;
 	padding-top: 24;
 	padding-left: 18;
 	padding-right: 18;

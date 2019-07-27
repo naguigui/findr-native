@@ -17,7 +17,7 @@ import {
 	JoinPartyContainer,
 } from '../containers'
 
-import { Welcome, CustomHeader } from '../components'
+import { Welcome } from '../components'
 
 import * as Routes from '../utils/routeNames'
 
@@ -61,8 +61,8 @@ const HomeStack = createStackNavigator(
 		},
 		[Routes.PARTY_ROUTE]: {
 			screen: PartyContainer,
-			navigationOptions: () => ({
-				header: null,
+			navigationOptions: ({ navigation }) => ({
+				title: navigation.getParam('title'),
 			}),
 		},
 		[Routes.JOIN_PARTY_ROUTE]: {

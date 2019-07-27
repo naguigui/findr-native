@@ -1,7 +1,12 @@
 import React from 'react'
 import { useQuery } from 'react-apollo-hooks'
 import { isEmpty } from 'lodash'
-import { Layout, Carousel, RestaurantCard } from '../../components'
+import {
+	Layout,
+	Carousel,
+	RestaurantCard,
+	RestaurantSelection,
+} from '../../components'
 import { GET_RESTAURANTS_QUERY } from './gql'
 
 const RestaurantSelectionContainer = () => {
@@ -33,7 +38,10 @@ const RestaurantSelectionContainer = () => {
 	return (
 		<Layout isAuthenticated={true} isLoading={loading}>
 			{!isEmpty(queryData) && (
-				<Carousel data={queryData.restaurants} renderItem={renderItem} />
+				<RestaurantSelection
+					restaurantData={queryData.restaurants}
+					renderCard={renderItem}
+				/>
 			)}
 		</Layout>
 	)

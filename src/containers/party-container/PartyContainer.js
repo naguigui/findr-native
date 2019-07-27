@@ -1,11 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { isEmpty } from 'lodash'
 import { useQuery, useMutation } from 'react-apollo-hooks'
 import RestaurantSelectionContainer from '../restaurant-selection-container'
 import { Layout, PartyList } from '../../components'
 import { GET_USER, START_SESSION_MUTATION } from './gql'
 
-const PartyContainer = () => {
+const PartyContainer = (props) => {
+	const { navigation } = props
 	const { data: queryData, loading: queryLoading } = useQuery(GET_USER)
 
 	const [startSessionMutation, { loading: mutationLoading }] = useMutation(
@@ -18,6 +19,12 @@ const PartyContainer = () => {
 		},
 	)
 
+	useEffect(() => {
+		navigation.setParams({
+			title: isEmpty(queryData) ? '' : queryData.user.room.name,
+		})
+	}, [queryData])
+
 	const isLoading = queryLoading || mutationLoading
 
 	return (
@@ -26,7 +33,6 @@ const PartyContainer = () => {
 				<PartyList
 					party={queryData.user.room.party}
 					pin={queryData.user.room.pin}
-					roomName={queryData.user.room.name}
 					startSession={startSessionMutation}
 				/>
 			)}

@@ -6,7 +6,7 @@ import ListItem from '../list-item'
 import * as S from './PartyList.styled.js'
 
 const PartyList = (props) => {
-	const { party, roomName, startSession, pin } = props
+	const { party, startSession, pin } = props
 
 	const renderUserInParty = ({ item }) => (
 		<ListItem key={item._id} label={item.name} subtitle={item.email} />
@@ -17,7 +17,6 @@ const PartyList = (props) => {
 	return (
 		<S.PartyListWrapper>
 			<>
-				<S.Title>{roomName}</S.Title>
 				<S.Subtitle>Invite your friends using this pin</S.Subtitle>
 				<S.Message>{pin}</S.Message>
 				<FlatList
